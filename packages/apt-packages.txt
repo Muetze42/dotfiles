@@ -117,6 +117,8 @@ ocrmypdf
 openjdk-21-jdk
 php
 php8.4-fpm
+php8.4-pcov
+php8.4-redis
 php-cli
 php-common
 php-curl

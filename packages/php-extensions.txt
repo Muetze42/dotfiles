@@ -24,6 +24,7 @@ mysqli
 mysqlnd
 openssl
 pcntl
+pcov
 pcre
 PDO
 pdo_mysql
@@ -34,6 +35,7 @@ Phar
 posix
 random
 readline
+redis
 Reflection
 session
 shmop
