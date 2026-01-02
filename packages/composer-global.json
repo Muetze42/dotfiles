@@ -1,0 +1,24 @@
+{
+    "repositories": [
+        {
+            "type": "vcs",
+            "url": "https://github.com/Muetze42/laravel-quality"
+        },
+        {
+            "type": "path",
+            "url": "/home/norman/Projects/packages/composer-updater"
+        }
+    ],
+    "require": {
+        "cpriego/valet-linux": "^2.4",
+        "laravel/installer": "^5.23",
+        "ergebnis/composer-normalize": "^2.48",
+        "norman-huth/laravel-quality": "dev-main",
+        "norman/composer-updater": "@dev"
+    },
+    "config": {
+        "allow-plugins": {
+            "ergebnis/composer-normalize": true
+        }
+    }
+}
