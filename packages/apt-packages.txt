@@ -4,7 +4,6 @@ bridge-utils
 bsdutils
 ca-certificates
 chrome-gnome-shell
-cncnet
 cpu-checker
 curl
 dash
@@ -171,7 +170,6 @@ shim-signed
 slack-desktop
 slurp
 software-properties-common
-synaptic
 tableplus
 totem
 ubuntu-desktop-minimal
@@ -185,11 +183,8 @@ virt-manager
 vlc
 wbritish
 wget
-wimtools
-wine64
 wmctrl
 wngerman
-woeusb-frontend-wxgtk
 wogerman
 wswiss
 xsel
