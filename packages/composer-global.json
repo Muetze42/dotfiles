@@ -11,9 +11,7 @@
     ],
     "require": {
         "cpriego/valet-linux": "^2.4",
-        "laravel/installer": "^5.23",
-        "ergebnis/composer-normalize": "^2.48",
-        "norman-huth/laravel-quality": "dev-main",
+        "norman-huth/laravel-quality": "@dev",
         "norman-huth/composer-updater": "@dev"
     },
     "config": {
