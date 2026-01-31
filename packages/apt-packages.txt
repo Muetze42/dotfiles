@@ -19,6 +19,7 @@ findutils
 flatpak
 fprintd
 fuse3
+fwupd
 gedit
 ghostscript
 git
