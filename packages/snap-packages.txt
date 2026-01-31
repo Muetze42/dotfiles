@@ -9,6 +9,6 @@ gnome-46-2404
 gtk-common-themes
 mailspring
 mesa-2404
-snap-store
 snapd
 snapd-desktop-integration
+snap-store

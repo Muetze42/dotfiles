@@ -1,4 +1,4 @@
 corepack
-npm-check-updates
 npm
+npm-check-updates
 typescript

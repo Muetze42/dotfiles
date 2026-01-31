@@ -1,4 +1,5 @@
-[PHP Modules]
+
+
 calendar
 Core
 ctype
@@ -33,6 +34,7 @@ pdo_pgsql
 pdo_sqlite
 pgsql
 Phar
+[PHP Modules]
 posix
 random
 readline
@@ -54,10 +56,8 @@ xml
 xmlreader
 xmlwriter
 xsl
+[Zend Modules]
+Zend OPcache
 Zend OPcache
 zip
 zlib
-
-[Zend Modules]
-Zend OPcache
-
