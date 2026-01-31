@@ -1,5 +1,6 @@
 1password
 apt-transport-https
+autocutsel
 bridge-utils
 bsdutils
 ca-certificates
@@ -11,13 +12,13 @@ dconf-cli
 diffutils
 dnsmasq
 dosfstools
+edid-decode
 efibootmgr
 ffmpegthumbnailer
 findutils
 flatpak
 fprintd
 fuse3
-fwupd
 gedit
 ghostscript
 git
@@ -64,10 +65,10 @@ ibus-table-cangjie-big
 imagemagick
 init
 inotify-tools
-insomnia
 intel-gpu-tools
 intel-media-va-driver-non-free
 iw
+jq
 kate
 language-pack-de
 language-pack-de-base
@@ -80,6 +81,7 @@ language-pack-gnome-en-base
 libarchive-tools
 libchewing3
 libchewing3-data
+libdav1d7
 libfuse2t64
 libjxl-tools
 libm17n-0
@@ -100,7 +102,7 @@ libreoffice-l10n-en-gb
 libreoffice-l10n-en-za
 libvirt-clients
 libvirt-daemon-system
-linux-generic-hwe-24.04
+linux-image-generic
 login
 lsb-release
 m17n-db
@@ -112,10 +114,13 @@ mythes-en-au
 mythes-en-us
 ncurses-base
 ncurses-bin
+network-manager
 nginx
 nload
+notepadqq
 ntfs-3g
-obsidian
+nvidia-driver-580-open
+nvidia-vaapi-driver
 ocrmypdf
 openjdk-21-jdk
 p7zip-full
@@ -171,6 +176,9 @@ slack-desktop
 slurp
 software-properties-common
 tableplus
+termius-app
+thinkfan
+timeshift
 totem
 ubuntu-desktop-minimal
 ubuntu-minimal
