@@ -3,6 +3,7 @@ com.github.finefindus.eyedropper
 com.jetpackduba.Gitnuro
 com.rafaelmardojai.WebfontKitGenerator
 com.tomjwatson.Emote
+com.ulduzsoft.Birdtray
 com.usebruno.Bruno
 es.danirod.Cartero
 it.mijorus.gearlever

@@ -5,6 +5,7 @@ bridge-utils
 bsdutils
 ca-certificates
 chrome-gnome-shell
+clipman
 cpu-checker
 curl
 dash
@@ -26,6 +27,7 @@ ghostscript
 git
 gnome-backgrounds
 gnome-shell-extension-appindicator
+gnome-shell-extension-gpaste
 gnome-shell-extension-prefs
 gnome-shell-extensions
 gnome-software-plugin-flatpak
@@ -34,6 +36,7 @@ gnome-tweaks
 gnome-user-docs-de
 google-chrome-stable
 gparted
+gpaste-2
 grep
 grim
 grub2-common
@@ -72,6 +75,7 @@ intel-media-va-driver-non-free
 iw
 jq
 kate
+kdocker
 language-pack-de
 language-pack-de-base
 language-pack-en
@@ -125,6 +129,7 @@ nvidia-driver-580-open
 nvidia-vaapi-driver
 ocrmypdf
 openjdk-21-jdk
+openssh-server
 p7zip-full
 parted
 php
@@ -147,6 +152,7 @@ php8.4-redis
 php8.4-sqlite3
 php8.4-xml
 php8.4-zip
+php-bcmath
 php-cli
 php-common
 php-curl
@@ -177,9 +183,11 @@ shim-signed
 slack-desktop
 slurp
 software-properties-common
+sshpass
 tableplus
 termius-app
 thinkfan
+thunderbird
 timeshift
 totem
 ubuntu-desktop-minimal
@@ -191,8 +199,10 @@ unrar
 vainfo
 virt-manager
 vlc
+vsftpd
 wbritish
 wget
+wl-clipboard
 wmctrl
 wngerman
 wogerman

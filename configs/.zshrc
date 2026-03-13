@@ -111,6 +111,7 @@ alias a="php artisan"
 alias c="composer"
 alias p="pnpm"
 alias v="valet"
+alias links="valet links"
 alias pint="./vendor/bin/pint --parallel"
 alias stan="./vendor/bin/phpstan analyse -v"
 alias rector="./vendor/bin/rector"
@@ -144,3 +145,6 @@ export NVM_DIR="$HOME/.nvm"
 export PATH="$PATH:$HOME/.local/share/JetBrains/Toolbox/scripts"
 
 export SSH_AUTH_SOCK=~/.1password/agent.sock
+
+# Add local bin to PATH
+export PATH="$HOME/.local/bin:$PATH"

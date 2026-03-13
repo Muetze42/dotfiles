@@ -4,7 +4,7 @@ OUTPUT_DIR="./packages"
 mkdir -p "$OUTPUT_DIR"
 
 # PHP Extensions
-php -m | sort > "$OUTPUT_DIR/php-extensions.txt"
+php -m | grep -v '^\[' | grep -v '^$' | sort -u > "$OUTPUT_DIR/php-extensions.txt"
 
 # APT Packages (manuell installiert)
 apt-mark showmanual | sort > "$OUTPUT_DIR/apt-packages.txt"

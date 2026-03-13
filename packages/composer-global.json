@@ -2,7 +2,7 @@
     "repositories": [
         {
             "type": "vcs",
-            "url": "https://github.com/Muetze42/laravel-quality"
+            "url": "https://github.com/ai-provide/warden"
         },
         {
             "type": "vcs",
@@ -11,8 +11,10 @@
     ],
     "require": {
         "cpriego/valet-linux": "^2.4",
-        "norman-huth/laravel-quality": "@dev",
-        "norman-huth/composer-updater": "@dev"
+        "norman-huth/composer-updater": "@dev",
+        "larastan/larastan": "^3.9",
+        "ai-provide/warden": "@dev",
+        "laravel/installer": "^5.24"
     },
     "config": {
         "allow-plugins": {

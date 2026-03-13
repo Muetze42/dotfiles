@@ -7,8 +7,8 @@ firmware-updater
 gnome-42-2204
 gnome-46-2404
 gtk-common-themes
-mailspring
 mesa-2404
 snapd
 snapd-desktop-integration
 snap-store
+thunderbird
