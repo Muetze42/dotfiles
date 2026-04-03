@@ -68,3 +68,27 @@ valet install
 ```
 
 [Valet Linux repository](https://github.com/cpriego/valet-linux)
+
+## Spatie Ray
+
+Download from [spatie.be](https://spatie.be/)
+
+## Tinkerwell
+
+Download from [beyondco.de](https://beyondco.de/)
+
+## Navicat
+
+Download from [customer.navicat.com](https://customer.navicat.com/)
+
+## Obsidian
+
+Download deb from [obsidian.md/download](https://obsidian.md/download)
+
+## 1password
+
+Download deb from [1password.com/downloads/linux](https://1password.com/downloads/linux)
+
+## Slack
+
+Download deb from [slack.com/downloads/linux](https://slack.com/downloads/linux)
