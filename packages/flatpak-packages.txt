@@ -1,10 +1,9 @@
+com.getmailspring.Mailspring
 com.getpostman.Postman
-com.github.finefindus.eyedropper
-com.jetpackduba.Gitnuro
-com.rafaelmardojai.WebfontKitGenerator
-com.tomjwatson.Emote
-com.ulduzsoft.Birdtray
+com.jeffser.Alpaca
 com.usebruno.Bruno
-es.danirod.Cartero
+io.github.db_mobile.resonance
+io.github.josephmawa.Bella
+io.github.mightycreak.Diffuse
+io.github.pol_rivero.github-desktop-plus
 it.mijorus.gearlever
-me.iepure.devtoolbox

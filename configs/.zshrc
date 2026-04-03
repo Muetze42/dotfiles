@@ -70,11 +70,7 @@ ZSH_THEME="dracula-pro"
 # Custom plugins may be added to $ZSH_CUSTOM/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-plugins=(
-  git
-  zsh-autosuggestions
-  zsh-syntax-highlighting
-)
+plugins=(git sudo z command-not-found history-substring-search)
 
 source $ZSH/oh-my-zsh.sh
 
@@ -106,16 +102,17 @@ source $ZSH/oh-my-zsh.sh
 # Example aliases
 # alias zshconfig="mate ~/.zshrc"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
+# Don`t forget run exec zsh ;)
 
 alias a="php artisan"
 alias c="composer"
 alias p="pnpm"
-alias v="valet"
-alias links="valet links"
-alias pint="./vendor/bin/pint --parallel"
+alias pint="./vendor/bin/pint"
 alias stan="./vendor/bin/phpstan analyse -v"
 alias rector="./vendor/bin/rector"
 alias tinker="php artisan tinker"
+alias v="valet"
+alias links="valet links"
 alias launcher="php artisan app:launcher"
 
 # History Settings
@@ -125,26 +122,36 @@ HISTFILE=~/.zsh_history
 setopt hist_ignore_all_dups share_history inc_append_history
 
 # Activate Plugins
-#source ~/.zsh/zsh-autosuggestions/zsh-autosuggestions.zsh
-#source ~/.zsh/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+source ~/.zsh/zsh-autosuggestions/zsh-autosuggestions.zsh
+source ~/.zsh/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 
 # Prevent Corepack from updating the packageManager field when it detects that the local package doesn't list it.
 export COREPACK_ENABLE_AUTO_PIN=0
 
-export PATH="$HOME/.local/bin:$PATH"
-
-# Composer global binaries
-export PATH="$HOME/.config/composer/vendor/bin:$PATH"
-
 # nvm global binaries
 export NVM_DIR="$HOME/.nvm"
-[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
-[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
+[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"
 
-# JetBrains Toolbox
-export PATH="$PATH:$HOME/.local/share/JetBrains/Toolbox/scripts"
+# Composer global binaries
+if [ -d "$HOME/.config/composer/vendor/bin" ]; then
+  export PATH="$PATH:$HOME/.config/composer/vendor/bin"
+fi
 
-export SSH_AUTH_SOCK=~/.1password/agent.sock
-
-# Add local bin to PATH
+# Python
+# . "$HOME/.local/bin/env"
 export PATH="$HOME/.local/bin:$PATH"
+export PIP_USER=1
+export COMPOSER_DEFAULT_VENDOR=norman-huth
+export COMPOSER_DEFAULT_LICENSE=MIT
+
+# pnpm
+export PNPM_HOME="/home/norman/.local/share/pnpm"
+case ":$PATH:" in
+  *":$PNPM_HOME:"*) ;;
+  *) export PATH="$PNPM_HOME:$PATH" ;;
+esac
+# pnpm end
+
+# Go
+export PATH=$PATH:/usr/local/go/bin:$HOME/go/bin

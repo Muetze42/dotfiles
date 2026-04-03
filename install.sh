@@ -73,12 +73,8 @@ install_gnome_extensions() {
 install_pnpm_global() {
     info "Installing global pnpm packages..."
     if ! command -v pnpm &> /dev/null; then
-        if command -v npm &> /dev/null; then
-            npm install -g pnpm
-        else
-            warn "npm/pnpm not found. Install nvm first (see MANUAL.md)"
-            return
-        fi
+        warn "npm/pnpm not found. Install nvm first (see MANUAL.md)"
+        return
     fi
     if [[ -f "$SCRIPT_DIR/packages/pnpm-global.txt" ]]; then
         xargs -a "$SCRIPT_DIR/packages/pnpm-global.txt" pnpm add -g
