@@ -4,16 +4,8 @@ These tools require manual installation steps.
 
 ## nvm (Node Version Manager)
 
-```bash
-curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.40.1/install.sh | bash
-```
-
-Then install Node:
-```bash
-nvm install --lts
-```
-
-[Official installation guide](https://github.com/nvm-sh/nvm#installing-and-updating)
+Install via:
+[https://nodejs.org/en/download](https://nodejs.org/en/download)
 
 ## Oh My Zsh
 
