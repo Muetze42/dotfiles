@@ -1,3 +1,4 @@
+codex
 corepack
 npm
 npm-check-updates

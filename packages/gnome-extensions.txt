@@ -1,10 +1,9 @@
 Bluetooth-Battery-Meter@maniacx.github.com
 caffeine@patapon.info
 ding@rastersoft.com
-openwispr-gnome-extension@tnfssc.github.com
+php-laravel-valet@rahulhaque
 places-menu@gnome-shell-extensions.gcampax.github.com
 snapd-prompting@canonical.com
-thinkpad-battery-threshold@marcosdalvarez.org
 tiling-assistant@ubuntu.com
 touchpad@gpawru
 ubuntu-appindicators@ubuntu.com
