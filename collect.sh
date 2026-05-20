@@ -30,4 +30,10 @@ mkdir -p "$OUTPUT_DIR"
 # ZSHRC config
 cp ~/.zshrc "$OUTPUT_DIR/.zshrc"
 
+# Sanitize secret exports in the collected shell config.
+# Keep the variable names, but clear their values in the exported file.
+sed -i -E \
+  's#^([[:space:]]*export[[:space:]]+([A-Z0-9_]*(API_KEY|TOKEN|SECRET))[[:space:]]*=).*#\1""#' \
+  "$OUTPUT_DIR/.zshrc"
+
 echo "Done. Check $OUTPUT_DIR"
