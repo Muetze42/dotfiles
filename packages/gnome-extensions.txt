@@ -4,11 +4,13 @@ ding@rastersoft.com
 php-laravel-valet@rahulhaque
 places-menu@gnome-shell-extensions.gcampax.github.com
 snapd-prompting@canonical.com
+snapd-search-provider@canonical.com
 tiling-assistant@ubuntu.com
 touchpad@gpawru
 ubuntu-appindicators@ubuntu.com
 ubuntu-dock@ubuntu.com
 utcclock@injcristianrojas.github.com
+web-search-provider@ubuntu.com
 weeks-start-on-monday@extensions.gnome-shell.fifi.org
-window-on-top@yousafesaeed.github.io
 windowIsReady_Remover@nunofarruca@gmail.com
+window-on-top@yousafesaeed.github.io

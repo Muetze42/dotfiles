@@ -1,4 +1,5 @@
 bare
+canonical-livepatch
 code
 core18
 core20
@@ -13,7 +14,7 @@ gnome-46-2404
 gtk-common-themes
 mesa-2404
 prompting-client
-snap-store
 snapd
 snapd-desktop-integration
+snap-store
 spotify

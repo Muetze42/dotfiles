@@ -39,5 +39,5 @@ Some tools require manual installation. See [MANUAL.md](MANUAL.md) for instructi
 
 ## Requirements
 
-- Ubuntu 25.10+
+- Ubuntu 26.04 or later
 - sudo access

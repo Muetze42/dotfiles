@@ -155,3 +155,11 @@ esac
 
 # Go
 export PATH=$PATH:/usr/local/go/bin:$HOME/go/bin
+export OPENAI_API_KEY=""
+
+# Valet
+export VALET_DOMAIN_PREFIX=d-
+
+# Added by LM Studio CLI (lms)
+export PATH="$PATH:/home/norman/.lmstudio/bin"
+# End of LM Studio CLI section
