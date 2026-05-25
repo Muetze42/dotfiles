@@ -1,0 +1,102 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+usage() {
+  cat <<'EOF'
+Usage: extract <archive> [destination]
+
+Extracts common archive formats into the current directory or an optional
+destination directory.
+
+Supported formats:
+  .tar
+  .tar.gz, .tgz
+  .tar.bz2, .tbz2
+  .tar.xz, .txz
+  .zip
+  .gz
+  .bz2
+  .xz
+  .7z
+  .rar
+EOF
+}
+
+need_cmd() {
+  local cmd="$1"
+  if ! command -v "$cmd" >/dev/null 2>&1; then
+    echo "Required command not found: $cmd" >&2
+    exit 1
+  fi
+}
+
+archive="${1:-}"
+destination="${2:-.}"
+
+if [[ -z "$archive" || "$archive" == "-h" || "$archive" == "--help" ]]; then
+  usage
+  exit 0
+fi
+
+if [[ ! -f "$archive" ]]; then
+  echo "Archive not found: $archive" >&2
+  exit 1
+fi
+
+mkdir -p "$destination"
+
+case "$archive" in
+  *.tar)
+    need_cmd tar
+    tar -xf "$archive" -C "$destination"
+    ;;
+  *.tar.gz|*.tgz)
+    need_cmd tar
+    tar -xzf "$archive" -C "$destination"
+    ;;
+  *.tar.bz2|*.tbz2)
+    need_cmd tar
+    tar -xjf "$archive" -C "$destination"
+    ;;
+  *.tar.xz|*.txz)
+    need_cmd tar
+    tar -xJf "$archive" -C "$destination"
+    ;;
+  *.zip)
+    need_cmd unzip
+    unzip -q "$archive" -d "$destination"
+    ;;
+  *.gz)
+    need_cmd gunzip
+    cp "$archive" "$destination/"
+    gunzip "$destination/$(basename "$archive")"
+    ;;
+  *.bz2)
+    need_cmd bunzip2
+    cp "$archive" "$destination/"
+    bunzip2 "$destination/$(basename "$archive")"
+    ;;
+  *.xz)
+    need_cmd unxz
+    cp "$archive" "$destination/"
+    unxz "$destination/$(basename "$archive")"
+    ;;
+  *.7z)
+    need_cmd 7z
+    7z x -y "-o$destination" "$archive" >/dev/null
+    ;;
+  *.rar)
+    if command -v unrar >/dev/null 2>&1; then
+      unrar x -o+ "$archive" "$destination/" >/dev/null
+    else
+      need_cmd 7z
+      7z x -y "-o$destination" "$archive" >/dev/null
+    fi
+    ;;
+  *)
+    echo "Unsupported archive format: $archive" >&2
+    exit 1
+    ;;
+esac
+
+echo "Extracted to $destination"

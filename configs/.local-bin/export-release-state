@@ -1,0 +1,93 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+usage() {
+  cat <<'EOF'
+Usage: export-release-state [output-dir]
+
+Exports a release-focused repository snapshot into a timestamped JSON file.
+The output captures branch/head state, tags, remotes, working tree status,
+recent commits, and a top-level file inventory.
+EOF
+}
+
+if [[ "${1:-}" == "-h" || "${1:-}" == "--help" ]]; then
+  usage
+  exit 0
+fi
+
+if ! git rev-parse --show-toplevel >/dev/null 2>&1; then
+  echo "Not inside a git repository." >&2
+  exit 1
+fi
+
+json_escape() {
+  local value="${1:-}"
+  value=${value//\\/\\\\}
+  value=${value//\"/\\\"}
+  value=${value//$'\n'/\\n}
+  value=${value//$'\r'/\\r}
+  value=${value//$'\t'/\\t}
+  printf '%s' "$value"
+}
+
+json_array_from_lines() {
+  local input="$1"
+  local first=true
+  printf '['
+  while IFS= read -r line; do
+    [[ -z "$line" ]] && continue
+    if "$first"; then
+      first=false
+    else
+      printf ','
+    fi
+    printf '"%s"' "$(json_escape "$line")"
+  done <<<"$input"
+  printf ']'
+}
+
+repo_root="$(git rev-parse --show-toplevel)"
+repo_name="$(basename "$repo_root")"
+timestamp="$(date -u +"%Y%m%dT%H%M%SZ")"
+output_dir="${1:-$repo_root/.repo-snapshots/releases}"
+output_file="$output_dir/${repo_name}-release-state-${timestamp}.json"
+
+mkdir -p "$output_dir"
+
+branch="$(git branch --show-current 2>/dev/null || true)"
+head_sha="$(git rev-parse HEAD)"
+head_subject="$(git log -1 --format=%s)"
+head_author="$(git log -1 --format='%an <%ae>')"
+head_date="$(git log -1 --format=%aI)"
+origin_url="$(git remote get-url origin 2>/dev/null || echo "")"
+status_short="$(git status --short --branch || true)"
+tags_all="$(git tag --sort=-creatordate || true)"
+tags_head="$(git tag --points-at HEAD || true)"
+recent_commits="$(git log --oneline --decorate -n 20 || true)"
+top_level_files="$(find "$repo_root" -maxdepth 1 -mindepth 1 -printf '%f\n' | sort)"
+
+{
+  printf '{\n'
+  printf '  "repo": "%s",\n' "$(json_escape "$repo_name")"
+  printf '  "root": "%s",\n' "$(json_escape "$repo_root")"
+  printf '  "created_at_utc": "%s",\n' "$(json_escape "$timestamp")"
+  printf '  "branch": "%s",\n' "$(json_escape "${branch:-<detached>}")"
+  printf '  "head": {\n'
+  printf '    "sha": "%s",\n' "$(json_escape "$head_sha")"
+  printf '    "subject": "%s",\n' "$(json_escape "$head_subject")"
+  printf '    "author": "%s",\n' "$(json_escape "$head_author")"
+  printf '    "date": "%s"\n' "$(json_escape "$head_date")"
+  printf '  },\n'
+  printf '  "origin": "%s",\n' "$(json_escape "$origin_url")"
+  printf '  "status": %s,\n' "$(json_array_from_lines "$status_short")"
+  printf '  "tags": {\n'
+  printf '    "all": %s,\n' "$(json_array_from_lines "$tags_all")"
+  printf '    "pointing_at_head": %s\n' "$(json_array_from_lines "$tags_head")"
+  printf '  },\n'
+  printf '  "recent_commits": %s,\n' "$(json_array_from_lines "$recent_commits")"
+  printf '  "top_level_files": %s\n' "$(json_array_from_lines "$top_level_files")"
+  printf '}\n'
+} >"$output_file"
+
+echo "Release state exported to $output_file"

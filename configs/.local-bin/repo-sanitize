@@ -1,0 +1,111 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+usage() {
+  cat <<'EOF'
+Usage: repo-sanitize [--apply] [--with-snapshot]
+
+Prepares a repository for publication by:
+  - warning about likely sensitive files
+  - warning about local/editor/temp junk
+  - optionally running clean-release for conservative cleanup
+
+Options:
+  --apply          Run clean-release after the checks
+  --with-snapshot  Run repo-snapshot before cleanup when used with --apply
+  -h, --help       Show this help
+EOF
+}
+
+apply_cleanup=false
+with_snapshot=false
+
+for arg in "$@"; do
+  case "$arg" in
+    --apply)
+      apply_cleanup=true
+      ;;
+    --with-snapshot)
+      with_snapshot=true
+      ;;
+    -h|--help)
+      usage
+      exit 0
+      ;;
+    *)
+      echo "Unknown argument: $arg" >&2
+      usage >&2
+      exit 1
+      ;;
+  esac
+done
+
+if ! git rev-parse --show-toplevel >/dev/null 2>&1; then
+  echo "Not inside a git repository." >&2
+  exit 1
+fi
+
+repo_root="$(git rev-parse --show-toplevel)"
+cd "$repo_root"
+
+tracked_files="$(git ls-files)"
+untracked_files="$(git ls-files --others --exclude-standard)"
+
+sensitive_pattern='(^|/)(\.env(\..*)?|.*\.pem|.*\.key|.*\.p12|.*\.pfx|id_rsa|id_ed25519|credentials(\..*)?|secrets?(\..*)?|.*secret.*|.*token.*|.*private.*)$'
+junk_pattern='(^|/)(\.DS_Store|Thumbs\.db|.*~|.*\.swp|.*\.swo|.*\.tmp|.*\.bak|.*\.orig)$'
+
+tracked_sensitive="$(printf '%s\n' "$tracked_files" | grep -E "$sensitive_pattern" || true)"
+untracked_sensitive="$(printf '%s\n' "$untracked_files" | grep -E "$sensitive_pattern" || true)"
+tracked_junk="$(printf '%s\n' "$tracked_files" | grep -E "$junk_pattern" || true)"
+untracked_junk="$(printf '%s\n' "$untracked_files" | grep -E "$junk_pattern" || true)"
+
+echo "Repository: $(basename "$repo_root")"
+echo "Root: $repo_root"
+echo
+
+if [[ -n "$tracked_sensitive" ]]; then
+  echo "Tracked files that look sensitive:"
+  printf '  %s\n' "$tracked_sensitive"
+  echo
+else
+  echo "No obvious tracked sensitive filenames detected."
+  echo
+fi
+
+if [[ -n "$untracked_sensitive" ]]; then
+  echo "Untracked files that look sensitive:"
+  printf '  %s\n' "$untracked_sensitive"
+  echo
+fi
+
+if [[ -n "$tracked_junk" ]]; then
+  echo "Tracked junk/temp files:"
+  printf '  %s\n' "$tracked_junk"
+  echo
+else
+  echo "No tracked junk/temp files detected."
+  echo
+fi
+
+if [[ -n "$untracked_junk" ]]; then
+  echo "Untracked junk/temp files:"
+  printf '  %s\n' "$untracked_junk"
+  echo
+fi
+
+echo "Ignored files that clean-release would remove:"
+git clean -fdX -n || true
+echo
+
+if "$apply_cleanup"; then
+  if command -v clean-release >/dev/null 2>&1; then
+    args=(--yes)
+    "$with_snapshot" && args+=(--with-snapshot)
+    clean-release "${args[@]}"
+  else
+    echo "clean-release not found in PATH." >&2
+    exit 1
+  fi
+else
+  echo "No cleanup applied. Use --apply to run clean-release after the checks."
+fi

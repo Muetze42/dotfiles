@@ -1,0 +1,77 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+usage() {
+  cat <<'EOF'
+Usage: git-stats [--all] [<ref>]
+
+Displays a summary of repository activity:
+  - Activity date range and total commits
+  - Commits per author
+  - Most frequently changed files (top 10)
+
+Arguments:
+  <ref>        Branch or ref to analyze (default: current HEAD)
+
+Options:
+  --all        Include all branches
+  -h, --help   Show this help
+EOF
+}
+
+ref=""
+all_branches=false
+
+for arg in "$@"; do
+  case "$arg" in
+    --all) all_branches=true ;;
+    -h|--help) usage; exit 0 ;;
+    -*) echo "Unknown option: $arg" >&2; usage >&2; exit 1 ;;
+    *)
+      if [[ -n "$ref" ]]; then
+        echo "Unexpected argument: $arg" >&2; usage >&2; exit 1
+      fi
+      ref="$arg"
+      ;;
+  esac
+done
+
+if ! git rev-parse --show-toplevel >/dev/null 2>&1; then
+  echo "Not inside a git repository." >&2
+  exit 1
+fi
+
+log_args=()
+"$all_branches" && log_args+=("--all")
+[[ -n "$ref" ]] && log_args+=("$ref")
+
+repo_name=$(basename "$(git rev-parse --show-toplevel)")
+echo "Repository: $repo_name"
+echo
+
+first_date=$(git log --pretty=format:"%ai" "${log_args[@]}" --reverse 2>/dev/null | head -1)
+last_date=$(git log --pretty=format:"%ai" "${log_args[@]}" 2>/dev/null | head -1)
+total_commits=$(git rev-list --count "${log_args[@]}" 2>/dev/null || echo 0)
+
+echo "== Activity range =="
+printf "  First:  %s\n" "${first_date:-n/a}"
+printf "  Last:   %s\n" "${last_date:-n/a}"
+printf "  Total:  %s commits\n" "$total_commits"
+echo
+
+echo "== Commits per author =="
+git shortlog -sn "${log_args[@]}" | while read -r count author; do
+  printf "  %5d  %s\n" "$count" "$author"
+done
+echo
+
+echo "== Most changed files (top 10) =="
+git log --pretty=format: --name-only "${log_args[@]}" 2>/dev/null \
+  | grep -v '^$' \
+  | sort \
+  | uniq -c \
+  | sort -rn \
+  | head -10 \
+  | while read -r count file; do
+      printf "  %5d  %s\n" "$count" "$file"
+    done

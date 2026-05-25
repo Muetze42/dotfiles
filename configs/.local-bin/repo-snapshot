@@ -1,0 +1,57 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+if ! git rev-parse --show-toplevel >/dev/null 2>&1; then
+  echo "Not inside a git repository." >&2
+  exit 1
+fi
+
+repo_root="$(git rev-parse --show-toplevel)"
+repo_name="$(basename "$repo_root")"
+timestamp="$(date -u +"%Y%m%dT%H%M%SZ")"
+snapshot_dir="${1:-$repo_root/.repo-snapshots}"
+snapshot_file="$snapshot_dir/${repo_name}-${timestamp}.txt"
+
+mkdir -p "$snapshot_dir"
+
+current_branch="$(git branch --show-current 2>/dev/null || true)"
+head_sha="$(git rev-parse HEAD)"
+remote_url="$(git remote get-url origin 2>/dev/null || echo "<no origin>")"
+
+{
+  echo "repo: $repo_name"
+  echo "root: $repo_root"
+  echo "created_at_utc: $timestamp"
+  echo "branch: ${current_branch:-<detached>}"
+  echo "head: $head_sha"
+  echo "origin: $remote_url"
+  echo
+  echo "== git status --short --branch =="
+  git status --short --branch
+  echo
+  echo "== git remote -v =="
+  git remote -v
+  echo
+  echo "== git tag --sort=-creatordate =="
+  git tag --sort=-creatordate
+  echo
+  echo "== tags pointing at HEAD =="
+  git tag --points-at HEAD
+  echo
+  echo "== git log --oneline --decorate -n 30 =="
+  git log --oneline --decorate -n 30
+  echo
+  echo "== git show --stat --summary HEAD =="
+  git show --stat --summary --format=fuller HEAD
+  echo
+  echo "== git diff --stat =="
+  git diff --stat
+  echo
+  echo "== git diff --cached --stat =="
+  git diff --cached --stat
+  echo
+  echo "== untracked files =="
+  git ls-files --others --exclude-standard
+} >"$snapshot_file"
+
+echo "Snapshot written to $snapshot_file"

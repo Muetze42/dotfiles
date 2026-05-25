@@ -1,0 +1,67 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+usage() {
+  cat <<'EOF'
+Usage: branch-date <name> [--no-switch]
+
+Creates a new branch named <YYYY-MM-DD>-<name>.
+
+Arguments:
+  <name>         Suffix for the branch name
+                 Example: "fix-login" → "2026-05-25-fix-login"
+
+Options:
+  --no-switch    Create the branch without switching to it
+  -h, --help     Show this help
+EOF
+}
+
+name=""
+switch=true
+
+for arg in "$@"; do
+  case "$arg" in
+    --no-switch) switch=false ;;
+    -h|--help) usage; exit 0 ;;
+    -*)
+      echo "Unknown option: $arg" >&2
+      usage >&2
+      exit 1
+      ;;
+    *)
+      if [[ -n "$name" ]]; then
+        echo "Unexpected argument: $arg" >&2
+        usage >&2
+        exit 1
+      fi
+      name="$arg"
+      ;;
+  esac
+done
+
+if [[ -z "$name" ]]; then
+  usage >&2
+  exit 1
+fi
+
+if ! git rev-parse --show-toplevel >/dev/null 2>&1; then
+  echo "Not inside a git repository." >&2
+  exit 1
+fi
+
+today=$(date +"%Y-%m-%d")
+branch_name="${today}-${name}"
+
+if git rev-parse --verify "$branch_name" >/dev/null 2>&1; then
+  echo "Branch '$branch_name' already exists." >&2
+  exit 1
+fi
+
+if "$switch"; then
+  git checkout -b "$branch_name"
+  echo "Created and switched to branch: $branch_name"
+else
+  git branch "$branch_name"
+  echo "Created branch: $branch_name"
+fi

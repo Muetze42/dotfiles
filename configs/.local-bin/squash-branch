@@ -1,0 +1,122 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+usage() {
+  cat <<'EOF'
+Usage: squash-branch [<base>] [-m <message>]
+
+Squashes all commits on the current branch since it diverged from <base>
+into a single commit. Opens the editor with the combined messages pre-filled
+unless -m is given.
+
+Arguments:
+  <base>           Branch or ref to squash against (default: main)
+
+Options:
+  --message, -m    Commit message for the squashed commit
+  -h, --help       Show this help
+
+Note: Rewrites history. Do not use on shared branches.
+EOF
+}
+
+base="main"
+message=""
+
+while [[ $# -gt 0 ]]; do
+  case "$1" in
+    --message|-m)
+      message="${2:-}"
+      shift 2
+      ;;
+    -h|--help)
+      usage
+      exit 0
+      ;;
+    -*)
+      echo "Unknown option: $1" >&2
+      usage >&2
+      exit 1
+      ;;
+    *)
+      base="$1"
+      shift
+      ;;
+  esac
+done
+
+if ! git rev-parse --show-toplevel >/dev/null 2>&1; then
+  echo "Not inside a git repository." >&2
+  exit 1
+fi
+
+current_branch=$(git branch --show-current 2>/dev/null || true)
+if [[ -z "$current_branch" ]]; then
+  echo "Detached HEAD — cannot squash." >&2
+  exit 1
+fi
+
+if ! git rev-parse --verify "$base" >/dev/null 2>&1; then
+  echo "Base branch '$base' not found." >&2
+  exit 1
+fi
+
+if [[ "$current_branch" == "$base" ]]; then
+  echo "Already on '$base' — nothing to squash." >&2
+  exit 1
+fi
+
+if [[ -n "$(git status --porcelain)" ]]; then
+  echo "Working tree is not clean. Commit or stash your changes first." >&2
+  exit 1
+fi
+
+merge_base=$(git merge-base HEAD "$base")
+commit_count=$(git rev-list --count "$merge_base"..HEAD)
+
+if [[ "$commit_count" -eq 0 ]]; then
+  echo "No commits ahead of '$base' to squash." >&2
+  exit 1
+fi
+
+if [[ "$commit_count" -eq 1 ]]; then
+  echo "Only one commit ahead of '$base' — nothing to squash."
+  exit 0
+fi
+
+echo "Branch:  $current_branch"
+echo "Base:    $base"
+echo "Commits: $commit_count"
+echo
+git log --oneline "$merge_base"..HEAD
+echo
+read -rp "Squash these $commit_count commits into one? [y/N] " answer
+if [[ "$answer" != [yY] ]]; then
+  echo "Aborted."
+  exit 0
+fi
+
+first_subject=$(git log --reverse --format="%s" "$merge_base"..HEAD | head -1)
+all_oneline=$(git log --reverse --oneline "$merge_base"..HEAD)
+
+git reset --soft "$merge_base"
+
+if [[ -n "$message" ]]; then
+  git commit -m "$message"
+else
+  tmp=$(mktemp)
+  trap 'rm -f "$tmp"' EXIT
+  {
+    echo "$first_subject"
+    echo ""
+    echo "# Squashed $commit_count commits from $current_branch:"
+    echo "#"
+    echo "$all_oneline" | sed 's/^/# /'
+  } >"$tmp"
+  git_editor=$(git var GIT_EDITOR)
+  "$git_editor" "$tmp"
+  git commit -F "$tmp"
+fi
+
+echo
+echo "Squashed $commit_count commits into one on '$current_branch'."

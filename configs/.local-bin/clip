@@ -1,0 +1,54 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+usage() {
+  cat <<'EOF'
+Usage: clip [<file>]
+       <command> | clip
+
+Copies file content or stdin to the clipboard.
+Supports Wayland (wl-copy) and X11 (xclip, xsel).
+
+Arguments:
+  <file>     File to copy (reads stdin if omitted)
+
+Options:
+  -h, --help   Show this help
+EOF
+}
+
+for arg in "$@"; do
+  case "$arg" in
+    -h|--help) usage; exit 0 ;;
+  esac
+done
+
+if [[ $# -gt 1 ]]; then
+  echo "Too many arguments." >&2
+  usage >&2
+  exit 1
+fi
+
+if command -v wl-copy >/dev/null 2>&1; then
+  copy_cmd=(wl-copy)
+elif command -v xclip >/dev/null 2>&1; then
+  copy_cmd=(xclip -selection clipboard)
+elif command -v xsel >/dev/null 2>&1; then
+  copy_cmd=(xsel --clipboard --input)
+else
+  echo "No clipboard tool found. Install wl-clipboard, xclip, or xsel." >&2
+  exit 1
+fi
+
+if [[ $# -eq 1 ]]; then
+  if [[ ! -f "$1" ]]; then
+    echo "File not found: $1" >&2
+    exit 1
+  fi
+  "${copy_cmd[@]}" <"$1"
+  echo "Copied $(wc -c <"$1") bytes to clipboard."
+else
+  content=$(cat)
+  printf '%s' "$content" | "${copy_cmd[@]}"
+  echo "Copied ${#content} bytes to clipboard."
+fi

@@ -1,0 +1,87 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+usage() {
+  cat <<'EOF'
+Usage: git-gone [--force]
+
+Prunes remote-tracking references and deletes local branches
+whose upstream is gone.
+
+Options:
+  --force, -f   Use 'git branch -D' instead of '-d' (deletes unmerged branches too)
+  -h, --help    Show this help
+EOF
+}
+
+force=false
+
+for arg in "$@"; do
+  case "$arg" in
+    --force|-f) force=true ;;
+    -h|--help) usage; exit 0 ;;
+    *) echo "Unknown argument: $arg" >&2; usage >&2; exit 1 ;;
+  esac
+done
+
+if ! git rev-parse --show-toplevel >/dev/null 2>&1; then
+  echo "Not inside a git repository." >&2
+  exit 1
+fi
+
+echo "Fetching and pruning remotes..."
+git fetch --prune
+
+current_branch=$(git branch --show-current 2>/dev/null || true)
+
+mapfile -t gone_branches < <(git branch -vv | grep ': gone]' | sed 's/^[[:space:]]*\*\?[[:space:]]*//' | awk '{print $1}')
+
+if [[ ${#gone_branches[@]} -eq 0 ]]; then
+  echo "No stale branches found."
+  exit 0
+fi
+
+echo
+echo "Branches whose remote is gone:"
+printf '  %s\n' "${gone_branches[@]}"
+echo
+
+deletable=()
+skipped=()
+for b in "${gone_branches[@]}"; do
+  if [[ "$b" == "$current_branch" ]]; then
+    skipped+=("$b")
+  else
+    deletable+=("$b")
+  fi
+done
+
+if [[ ${#skipped[@]} -gt 0 ]]; then
+  echo "Skipped (currently checked out):"
+  printf '  %s\n' "${skipped[@]}"
+  echo
+fi
+
+if [[ ${#deletable[@]} -eq 0 ]]; then
+  echo "Nothing to delete."
+  exit 0
+fi
+
+read -rp "Delete the branches listed above? [y/N] " answer
+if [[ "$answer" != [yY] ]]; then
+  echo "Aborted."
+  exit 0
+fi
+
+delete_flag="-d"
+if "$force"; then
+  delete_flag="-D"
+fi
+
+for b in "${deletable[@]}"; do
+  if git branch "$delete_flag" "$b" 2>/dev/null; then
+    echo "Deleted: $b"
+  else
+    echo "Could not delete '$b' (unmerged). Use --force to override." >&2
+  fi
+done

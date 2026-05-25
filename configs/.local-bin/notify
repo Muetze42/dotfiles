@@ -1,0 +1,60 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+usage() {
+  cat <<'EOF'
+Usage: notify [<message>]
+       <command> && notify [<message>]
+
+Sends a desktop notification. Useful as a signal after long-running commands.
+
+Arguments:
+  <message>      Notification body (default: "Done.")
+
+Options:
+  --title, -t    Notification title (default: "notify")
+  --urgency, -u  low, normal, or critical (default: normal)
+  -h, --help     Show this help
+
+Examples:
+  make build && notify "Build finished"
+  notify --urgency critical "Deployment failed"
+EOF
+}
+
+message="Done."
+title="notify"
+urgency="normal"
+
+while [[ $# -gt 0 ]]; do
+  case "$1" in
+    --title|-t)
+      title="${2:-}"
+      shift 2
+      ;;
+    --urgency|-u)
+      urgency="${2:-normal}"
+      shift 2
+      ;;
+    -h|--help)
+      usage
+      exit 0
+      ;;
+    -*)
+      echo "Unknown option: $1" >&2
+      usage >&2
+      exit 1
+      ;;
+    *)
+      message="$1"
+      shift
+      ;;
+  esac
+done
+
+if ! command -v notify-send >/dev/null 2>&1; then
+  echo "notify-send not found. Install libnotify-bin." >&2
+  exit 1
+fi
+
+notify-send --urgency="$urgency" "$title" "$message"

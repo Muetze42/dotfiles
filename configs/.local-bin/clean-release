@@ -1,0 +1,123 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+usage() {
+  cat <<'EOF'
+Usage: clean-release [--yes] [--with-snapshot]
+
+Conservative cleanup before a final history rewrite or handoff.
+Removes common local junk and prunes ignored files via git clean -fdX.
+
+Options:
+  --yes            Skip confirmation prompt
+  --with-snapshot  Run repo-snapshot first
+  -h, --help       Show this help
+EOF
+}
+
+confirm=false
+with_snapshot=false
+
+for arg in "$@"; do
+  case "$arg" in
+    --yes)
+      confirm=true
+      ;;
+    --with-snapshot)
+      with_snapshot=true
+      ;;
+    -h|--help)
+      usage
+      exit 0
+      ;;
+    *)
+      echo "Unknown argument: $arg" >&2
+      usage >&2
+      exit 1
+      ;;
+  esac
+done
+
+if ! git rev-parse --show-toplevel >/dev/null 2>&1; then
+  echo "Not inside a git repository." >&2
+  exit 1
+fi
+
+repo_root="$(git rev-parse --show-toplevel)"
+cd "$repo_root"
+
+if "$with_snapshot"; then
+  if command -v repo-snapshot >/dev/null 2>&1; then
+    repo-snapshot
+  else
+    echo "repo-snapshot not found in PATH." >&2
+    exit 1
+  fi
+fi
+
+junk_paths=(
+  ".DS_Store"
+  "Thumbs.db"
+  ".eslintcache"
+  ".stylelintcache"
+  ".cache"
+  ".tmp"
+  "tmp"
+  "temp"
+  "coverage"
+  ".nyc_output"
+  ".pytest_cache"
+  ".mypy_cache"
+  ".ruff_cache"
+  ".tox"
+  ".nox"
+  ".turbo"
+  ".next"
+  ".nuxt"
+  ".svelte-kit"
+  "dist"
+  "build"
+  ".parcel-cache"
+)
+
+existing_junk=()
+for path in "${junk_paths[@]}"; do
+  if [[ -e "$path" ]]; then
+    existing_junk+=("$path")
+  fi
+done
+
+echo "Repository: $(basename "$repo_root")"
+echo "Root: $repo_root"
+echo
+echo "Ignored files/directories that would be removed by git clean -fdX:"
+git clean -fdX -n || true
+echo
+
+if ((${#existing_junk[@]} > 0)); then
+  echo "Common local junk that would be removed explicitly:"
+  printf '  %s\n' "${existing_junk[@]}"
+else
+  echo "No common local junk detected."
+fi
+echo
+echo "Tracked changes are not touched."
+echo "Untracked, non-ignored files are not touched."
+echo
+
+if ! "$confirm"; then
+  read -rp "Type CLEAN to remove the items shown above: " answer
+  if [[ "$answer" != "CLEAN" ]]; then
+    echo "Aborted."
+    exit 0
+  fi
+fi
+
+if ((${#existing_junk[@]} > 0)); then
+  rm -rf -- "${existing_junk[@]}"
+fi
+
+git clean -fdX
+
+echo
+echo "Cleanup complete."

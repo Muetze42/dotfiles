@@ -1,7 +1,44 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-branch="${1:-main}"
+usage() {
+  cat <<'EOF'
+Usage: clear-commits [branch] [--wip|--initial]
+
+Rewrites the branch history into a single orphan commit and force-pushes it.
+
+Options:
+  --wip      Use commit message "chore: wip"
+  --initial  Use commit message "chore: initial commit" (default)
+  -h, --help Show this help
+EOF
+}
+
+branch="main"
+commit_message="chore: initial commit"
+
+for arg in "$@"; do
+  case "$arg" in
+    --wip)
+      commit_message="chore: wip"
+      ;;
+    --initial)
+      commit_message="chore: initial commit"
+      ;;
+    -h|--help)
+      usage
+      exit 0
+      ;;
+    --*)
+      echo "Unknown argument: $arg" >&2
+      usage >&2
+      exit 1
+      ;;
+    *)
+      branch="$arg"
+      ;;
+  esac
+done
 
 echo "Delete all commit history? Using branch \"$branch\""
 read -rp "Do you want to continue? [y/N] " answer
@@ -13,7 +50,7 @@ fi
 
 git checkout --orphan latest_branch
 git add -A
-git commit -m "chore: initial commit"
+git commit -m "$commit_message"
 git branch -D "$branch"
 git branch -m "$branch"
 git push -f origin "$branch"
