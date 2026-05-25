@@ -1,0 +1,5 @@
+1Password
+JDownloader 2
+Obsidian
+Telegram
+tinyMediaManager
