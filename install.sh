@@ -75,6 +75,12 @@ show_appimages() {
     info "AppImage list: $SCRIPT_DIR/packages/appimage-packages.txt"
 }
 
+# JetBrains Toolbox apps
+show_jetbrains_toolbox_apps() {
+    info "JetBrains Toolbox apps are exported as a reference list and need restore via Toolbox"
+    info "JetBrains Toolbox app list: $SCRIPT_DIR/packages/jetbrains-toolbox-apps.txt"
+}
+
 # pnpm global packages
 install_pnpm_global() {
     info "Installing global pnpm packages..."
@@ -151,6 +157,10 @@ main() {
 
     if confirm "Show AppImage info?"; then
         show_appimages
+    fi
+
+    if confirm "Show JetBrains Toolbox app info?"; then
+        show_jetbrains_toolbox_apps
     fi
 
     if confirm "Install global pnpm packages?"; then

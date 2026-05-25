@@ -18,6 +18,15 @@ snap list | tail -n +2 | awk '{print $1}' | sort > "$OUTPUT_DIR/snap-packages.tx
 # Flatpak
 flatpak list --app --columns=application | sort > "$OUTPUT_DIR/flatpak-packages.txt" 2>/dev/null
 
+# JetBrains Toolbox apps
+find \
+  "$HOME/.local/share/applications" \
+  -maxdepth 1 -type f -name 'jetbrains*.desktop' 2>/dev/null |
+  while IFS= read -r desktop_file; do
+    grep -E '^Exec=' "$desktop_file" |
+      sed -nE 's#.*JetBrains/Toolbox/apps/([^/]+)/bin/.*#\1#p'
+  done | sed '/^$/d' | sort -u > "$OUTPUT_DIR/jetbrains-toolbox-apps.txt"
+
 # AppImages registered via desktop files or stored in common AppImage directories
 {
   find \

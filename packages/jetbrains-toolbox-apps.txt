@@ -1,0 +1,8 @@
+android-studio
+datagrip
+goland
+intellij-idea
+phpstorm
+pycharm
+rustrover
+webstorm
