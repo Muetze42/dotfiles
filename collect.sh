@@ -2,6 +2,7 @@
 
 OUTPUT_DIR="./packages"
 mkdir -p "$OUTPUT_DIR"
+TAB="$(printf '\t')"
 
 # PHP Extensions
 php -m | grep -v '^\[' | grep -v '^$' | sort -u > "$OUTPUT_DIR/php-extensions.txt"
@@ -26,6 +27,24 @@ find \
     grep -E '^Exec=' "$desktop_file" |
       sed -nE 's#.*JetBrains/Toolbox/apps/([^/]+)/bin/.*#\1#p'
   done | sed '/^$/d' | sort -u > "$OUTPUT_DIR/jetbrains-toolbox-apps.txt"
+
+# Manually installed desktop apps under /opt
+find \
+  "$HOME/.local/share/applications" \
+  /usr/share/applications \
+  -maxdepth 1 -type f -name '*.desktop' 2>/dev/null |
+  while IFS= read -r desktop_file; do
+    app_name="$(sed -n 's/^Name=//p' "$desktop_file" | head -n1)"
+    exec_path="$(grep -E '^Exec=' "$desktop_file" |
+      grep -oE '(/opt/[^[:space:]"]+)' |
+      grep -vE '^/opt/google/chrome/' |
+      grep -vE '^/opt/jetbrains/' |
+      head -n1)"
+
+    if [ -n "$app_name" ] && [ -n "$exec_path" ]; then
+      printf '%s\t%s\n' "$exec_path" "$app_name"
+    fi
+  done | sort -t "$TAB" -k1,1 -k2,2 | awk -F '\t' '!seen[$1]++ { print $2 }' > "$OUTPUT_DIR/manual-opt-apps.txt"
 
 # AppImages registered via desktop files or stored in common AppImage directories
 {

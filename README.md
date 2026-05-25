@@ -12,6 +12,7 @@ Personal dotfiles and package lists for Ubuntu/GNOME setup.
 - `snap-packages.txt` - Snap packages (Firefox, Steam, etc.)
 - `flatpak-packages.txt` - Flatpak applications
 - `jetbrains-toolbox-apps.txt` - JetBrains IDEs/apps installed via JetBrains Toolbox
+- `manual-opt-apps.txt` - Desktop apps registered from manual installs under `/opt`
 - `appimage-packages.txt` - Registered AppImages and AppImages in common local install directories
 - `php-extensions.txt` - PHP modules reference
 - `gnome-extensions.txt` - GNOME Shell extensions
@@ -33,6 +34,7 @@ This will:
 - Install GNOME extensions
 - Show exported AppImage inventory
 - Show exported JetBrains Toolbox app inventory
+- Show exported manual `/opt` app inventory
 - Install global pnpm packages
 - Install global Composer packages
 - Symlink .zshrc to home directory

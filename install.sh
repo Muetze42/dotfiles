@@ -81,6 +81,12 @@ show_jetbrains_toolbox_apps() {
     info "JetBrains Toolbox app list: $SCRIPT_DIR/packages/jetbrains-toolbox-apps.txt"
 }
 
+# Manually installed desktop apps under /opt
+show_manual_opt_apps() {
+    info "Apps installed under /opt are exported as a reference list and need manual restore"
+    info "Manual /opt app list: $SCRIPT_DIR/packages/manual-opt-apps.txt"
+}
+
 # pnpm global packages
 install_pnpm_global() {
     info "Installing global pnpm packages..."
@@ -161,6 +167,10 @@ main() {
 
     if confirm "Show JetBrains Toolbox app info?"; then
         show_jetbrains_toolbox_apps
+    fi
+
+    if confirm "Show manual /opt app info?"; then
+        show_manual_opt_apps
     fi
 
     if confirm "Install global pnpm packages?"; then
