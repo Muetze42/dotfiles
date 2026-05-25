@@ -1,0 +1,19 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+branch="${1:-main}"
+
+echo "Delete all commit history? Using branch \"$branch\""
+read -rp "Do you want to continue? [y/N] " answer
+
+if [[ "$answer" != [yY] ]]; then
+  echo "Aborted."
+  exit 0
+fi
+
+git checkout --orphan latest_branch
+git add -A
+git commit -m "chore: wip"
+git branch -D "$branch"
+git branch -m "$branch"
+git push -f origin "$branch"
