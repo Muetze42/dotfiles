@@ -136,6 +136,16 @@ symlink_configs() {
         ln -sf "$SCRIPT_DIR/configs/.zshrc" ~/.zshrc
         success "Linked .zshrc"
     fi
+
+    if [[ -d "$SCRIPT_DIR/configs/.local-bin" ]]; then
+        mkdir -p ~/.local/bin
+        find "$SCRIPT_DIR/configs/.local-bin" -maxdepth 1 -type f | while IFS= read -r script_file; do
+            target="$HOME/.local/bin/$(basename "$script_file")"
+            cp "$script_file" "$target"
+            chmod +x "$target"
+        done
+        success "Copied ~/.local/bin scripts"
+    fi
 }
 
 # Main

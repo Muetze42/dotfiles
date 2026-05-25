@@ -6,6 +6,7 @@ Personal dotfiles and package lists for Ubuntu/GNOME setup.
 
 ### Configs
 - `.zshrc` - Zsh configuration with Oh My Zsh, aliases, and path setup
+- `.local-bin/` - Personal scripts from `~/.local/bin`
 
 ### Package Lists
 - `apt-packages.txt` - APT packages (dev tools, PHP, databases, system utilities)
@@ -38,6 +39,7 @@ This will:
 - Install global pnpm packages
 - Install global Composer packages
 - Symlink .zshrc to home directory
+- Copy personal `~/.local/bin` scripts
 
 ### Manual Installation
 

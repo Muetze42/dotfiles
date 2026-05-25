@@ -73,9 +73,20 @@ cp ~/.config/composer/composer.json "$OUTPUT_DIR/composer-global.json" 2>/dev/nu
 
 OUTPUT_DIR="./configs"
 mkdir -p "$OUTPUT_DIR"
+LOCAL_BIN_DIR="$OUTPUT_DIR/.local-bin"
+mkdir -p "$LOCAL_BIN_DIR"
 
 # ZSHRC config
 cp ~/.zshrc "$OUTPUT_DIR/.zshrc"
+
+# User scripts
+find "$LOCAL_BIN_DIR" -mindepth 1 -maxdepth 1 -type f -delete 2>/dev/null
+find "$HOME/.local/bin" -maxdepth 1 -type f 2>/dev/null |
+  while IFS= read -r script_file; do
+    if head -n1 "$script_file" 2>/dev/null | grep -q '^#!'; then
+      cp "$script_file" "$LOCAL_BIN_DIR/"
+    fi
+  done
 
 # Sanitize secret exports in the collected shell config.
 # Keep the variable names, but clear their values in the exported file.
