@@ -1,0 +1,4 @@
+lmstudio.appimage
+navicat_premium_16.appimage
+ray.appimage
+tinkerwell.appimage

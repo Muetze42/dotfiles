@@ -11,6 +11,7 @@ Personal dotfiles and package lists for Ubuntu/GNOME setup.
 - `apt-packages.txt` - APT packages (dev tools, PHP, databases, system utilities)
 - `snap-packages.txt` - Snap packages (Firefox, Steam, etc.)
 - `flatpak-packages.txt` - Flatpak applications
+- `appimage-packages.txt` - Registered AppImages and AppImages in common local install directories
 - `php-extensions.txt` - PHP modules reference
 - `gnome-extensions.txt` - GNOME Shell extensions
 - `pnpm-global.txt` - Global pnpm packages
@@ -29,6 +30,7 @@ This will:
 - Install Snap packages
 - Install PHP extensions
 - Install GNOME extensions
+- Show exported AppImage inventory
 - Install global pnpm packages
 - Install global Composer packages
 - Symlink .zshrc to home directory

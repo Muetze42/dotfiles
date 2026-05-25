@@ -69,6 +69,12 @@ install_gnome_extensions() {
     fi
 }
 
+# AppImages
+show_appimages() {
+    info "AppImages are exported as a reference list and need manual restore"
+    info "AppImage list: $SCRIPT_DIR/packages/appimage-packages.txt"
+}
+
 # pnpm global packages
 install_pnpm_global() {
     info "Installing global pnpm packages..."
@@ -141,6 +147,10 @@ main() {
 
     if confirm "Show GNOME extensions info?"; then
         install_gnome_extensions
+    fi
+
+    if confirm "Show AppImage info?"; then
+        show_appimages
     fi
 
     if confirm "Install global pnpm packages?"; then

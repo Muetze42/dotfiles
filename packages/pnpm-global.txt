@@ -1,5 +1,6 @@
 codex
 corepack
+gemini-cli
 npm
 npm-check-updates
 typescript

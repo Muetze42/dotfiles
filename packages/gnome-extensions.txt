@@ -11,6 +11,4 @@ ubuntu-appindicators@ubuntu.com
 ubuntu-dock@ubuntu.com
 utcclock@injcristianrojas.github.com
 web-search-provider@ubuntu.com
-weeks-start-on-monday@extensions.gnome-shell.fifi.org
 windowIsReady_Remover@nunofarruca@gmail.com
-window-on-top@yousafesaeed.github.io
