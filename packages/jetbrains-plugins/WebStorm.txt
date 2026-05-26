@@ -1,11 +1,6 @@
+acejump
 Atom Material Icons
 CodeGlancePro
-Mermaid
-Notebooks
-StringManipulation
-WakaTime
-ZeroLengthRadar
-acejump
 dotenv
 dracula-pro
 ej
@@ -25,10 +20,15 @@ javascript-debugger
 lsp4ij
 markdown-editor
 mcpserver
+Mermaid
 ml-llm
 nodeJS-remoteInterpreter
+Notebooks
 performanceTesting
 restart-eslint-action-plugin
+StringManipulation
 ts-test-toolbox
 vcs-svn
 vuejs-plugin
+WakaTime
+ZeroLengthRadar

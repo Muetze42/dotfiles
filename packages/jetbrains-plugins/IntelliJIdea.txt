@@ -1,10 +1,7 @@
 Atom Material Icons
+clouds-docker-impl
 CodeGlancePro
 Dart
-Mermaid
-Notebooks
-Spring
-clouds-docker-impl
 dotenv
 dracula-pro
 fullLine
@@ -18,11 +15,14 @@ jupyter-plugin
 lsp4ij
 markdown-editor
 mcpserver
+Mermaid
 ml-llm
 nodeJS-remoteInterpreter
+Notebooks
 performanceTesting
 php-impl
 remoteRun
+Spring
 vcs-perforce
 vcs-svn
 vuejs-plugin

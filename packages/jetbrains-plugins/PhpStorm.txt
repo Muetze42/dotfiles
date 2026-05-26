@@ -1,34 +1,21 @@
-Atom Material Icons
-CodeGlancePro
-Cypresso
-Git Commit Message Helper
-IntelliVuePlugin
-JSLint
-JsonHelper
-JsonParser
-Laravel Tinker
-MarioProgressBar-1.9
-Mermaid
-PHP Annotations
-StringManipulation
-Tailwind Smart Completions
-TranslationPlugin
-WakaTime
-ZeroLengthRadar
 acejump
 aqua-plugin
+Atom Material Icons
 bashsupport-pro
 clouds-docker-impl
+CodeGlancePro
+Cypresso
 dotenv
 dracula-pro
 ej
 faker-intellij-plugin
 fullLine
 generator
+Git Commit Message Helper
 gittoolbox
 hunspell
-idea-php-toolbox
 idea-phpstan-toolbox
+idea-php-toolbox
 ignore
 image-viewer
 intellij-astro-plugin
@@ -38,18 +25,31 @@ intellij-json-sorter-plugin
 intellij-mjml-support
 intellij-neon
 intellij-rainbow-brackets
+IntelliVuePlugin
+JSLint
+JsonHelper
+JsonParser
 laravel-idea
+Laravel Tinker
 lsp4ij
+MarioProgressBar-1.9
 markdown-editor
 mcpserver
+Mermaid
 mjml-support
 ml-llm
 nginx-intellij-plugin
+PHP Annotations
 phpinspectionsea-6.1.0
 phpinspectionsea-6.2.0
 properties
 remoteRun
+StringManipulation
+Tailwind Smart Completions
 testdata-plugin
+TranslationPlugin
 vcs-svn
 w3validators
+WakaTime
 webDeployment
+ZeroLengthRadar

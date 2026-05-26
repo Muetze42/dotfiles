@@ -1,15 +1,8 @@
+acejump
 Atom Material Icons
 CamelCasePlugin
-CodeGlancePro
-Indent Rainbow
-JsonHelper
-Mermaid
-Notebooks
-StringManipulation
-WakaTime
-ZeroLengthRadar
-acejump
 clouds-docker-impl
+CodeGlancePro
 dotenv
 dracula-pro
 ej
@@ -21,17 +14,24 @@ go-linter
 graphql
 ignore
 image-viewer
+Indent Rainbow
 intellij-awesome-console-0.1337.12
 intellij-csv-validator
 intellij-developer-tools-plugin
 intellij-rainbow-brackets
+JsonHelper
 markdown-editor
 mcpserver
+Mermaid
 ml-llm
+Notebooks
 performanceTesting
 postcss
 prettierJS
+StringManipulation
 tailwindcss
 vcs-svn
 vitejs
+WakaTime
 webDeployment
+ZeroLengthRadar
