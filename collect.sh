@@ -6,6 +6,60 @@ JETBRAINS_PLUGIN_DIR="$OUTPUT_DIR/jetbrains-plugins"
 mkdir -p "$JETBRAINS_PLUGIN_DIR"
 TAB="$(printf '\t')"
 
+read_plugin_xml_value() {
+  xml_content="$1"
+  tag_name="$2"
+  printf '%s\n' "$xml_content" |
+    sed -n "s#.*<$tag_name>\\([^<]*\\)</$tag_name>.*#\\1#p" |
+    head -n1
+}
+
+extract_plugin_metadata() {
+  plugin_path="$1"
+  plugin_basename="$(basename "$plugin_path")"
+  xml_content=""
+
+  if [ -d "$plugin_path" ]; then
+    if [ -f "$plugin_path/META-INF/plugin.xml" ]; then
+      xml_content="$(tr '\n' ' ' < "$plugin_path/META-INF/plugin.xml" 2>/dev/null)"
+    else
+      descriptor_jar="$(
+        find "$plugin_path" -maxdepth 3 -type f -name '*.jar' 2>/dev/null |
+          while IFS= read -r jar_path; do
+            if unzip -p "$jar_path" META-INF/plugin.xml >/dev/null 2>&1; then
+              printf '%s\n' "$jar_path"
+              break
+            fi
+          done
+      )"
+
+      if [ -n "$descriptor_jar" ]; then
+        xml_content="$(unzip -p "$descriptor_jar" META-INF/plugin.xml 2>/dev/null | tr '\n' ' ')"
+      fi
+    fi
+  elif [ -f "$plugin_path" ]; then
+    xml_content="$(unzip -p "$plugin_path" META-INF/plugin.xml 2>/dev/null | tr '\n' ' ')"
+  fi
+
+  plugin_id="$(read_plugin_xml_value "$xml_content" "id")"
+  plugin_name="$(read_plugin_xml_value "$xml_content" "name")"
+  plugin_version="$(read_plugin_xml_value "$xml_content" "version")"
+
+  if [ -z "$plugin_id" ]; then
+    plugin_id="$plugin_name"
+  fi
+
+  if [ -z "$plugin_id" ]; then
+    plugin_id="${plugin_basename%.jar}"
+  fi
+
+  if [ -z "$plugin_name" ]; then
+    plugin_name="$plugin_id"
+  fi
+
+  printf '%s\t%s\t%s\n' "$plugin_id" "$plugin_version" "$plugin_name"
+}
+
 # PHP Extensions
 php -m | grep -v '^\[' | grep -v '^$' | sort -u > "$OUTPUT_DIR/php-extensions.txt"
 
@@ -50,13 +104,25 @@ if [ -d "$HOME/.local/share/JetBrains" ]; then
     sort -t "$TAB" -k1,1 |
     while IFS="$TAB" read -r product version ide_dir; do
       output_file="$JETBRAINS_PLUGIN_DIR/${product}.txt"
+      metadata_file="$(mktemp)"
 
       find "$ide_dir" -maxdepth 1 -mindepth 1 \
         \( -type d -o \( -type f -name '*.jar' \) \) ! -name '.*' 2>/dev/null |
         while IFS= read -r plugin_path; do
-          plugin_name="$(basename "$plugin_path")"
-          printf '%s\n' "${plugin_name%.jar}"
-        done | sed '/^$/d' | sort -u > "$output_file"
+          extract_plugin_metadata "$plugin_path"
+        done > "$metadata_file"
+
+      sort -t "$TAB" -k1,1 -k2,2Vr "$metadata_file" |
+        awk -F '\t' '!seen[$1]++ {
+          if ($3 != "" && $3 != $1) {
+            print $3 " (" $1 ")"
+          } else {
+            print $1
+          }
+        }' |
+        sed '/^$/d' | sort -f > "$output_file"
+
+      rm -f "$metadata_file"
     done
 fi
 
