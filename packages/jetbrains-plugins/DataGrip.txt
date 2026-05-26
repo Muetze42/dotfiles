@@ -1,6 +1,6 @@
-bigdatatools-azure
-dracula-pro
-mcpserver
-ml-llm
-python-ce
-toml
+Big Data Tools Azure (intellij.bigdatatools.azure)
+Dracula Pro (com.draculatheme.idea)
+JetBrains AI Assistant (com.intellij.ml.llm)
+MCP Server (com.intellij.mcpServer)
+Python Community Edition (PythonCore)
+Toml (org.toml.lang)

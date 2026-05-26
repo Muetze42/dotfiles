@@ -1,29 +1,29 @@
-Atom Material Icons
-clouds-docker-impl
-CodeGlancePro
+.env files (ru.adelf.idea.dotenv)
+.ignore (mobi.hsz.idea.gitignore)
+Atom Material Icons (com.mallowigi)
+CodeGlance Pro (com.nasller.CodeGlancePro)
+CSV Editor (net.seesharpsoft.intellij.plugins.csv)
 Dart
-dotenv
-dracula-pro
-fullLine
-gittoolbox
-graphql
-ignore
-image-viewer
-intellij-csv-validator
-intellij-rainbow-brackets
-jupyter-plugin
-lsp4ij
-markdown-editor
-mcpserver
-Mermaid
-ml-llm
-nodeJS-remoteInterpreter
-Notebooks
-performanceTesting
-php-impl
-remoteRun
-Spring
-vcs-perforce
-vcs-svn
-vuejs-plugin
-webDeployment
+Debug Image Viewer (pl.sudo.imageviewer.python)
+Docker
+Dracula Pro (com.draculatheme.idea)
+FTP/SFTP/WebDAV Connectivity (com.jetbrains.plugins.webDeployment)
+Full Line Code Completion (org.jetbrains.completion.full.line)
+GitToolBox (zielu.gittoolbox)
+GraphQL (com.intellij.lang.jsgraphql)
+JetBrains AI Assistant (com.intellij.ml.llm)
+Jupyter (intellij.jupyter)
+LSP4IJ (com.redhat.devtools.lsp4ij)
+Markdown Editor (com.shuzijun.markdown-editor)
+MCP Server (com.intellij.mcpServer)
+Mermaid (com.intellij.mermaid)
+Node.js Remote Interpreter (org.jetbrains.plugins.node-remote-interpreter)
+Notebook (com.itcodebox.leewyatt.notebooks.id)
+Perforce P4 (Helix Core) (PerforceDirectPlugin)
+Performance Testing (com.jetbrains.performancePlugin)
+PHP for JetBrains Client (com.intellij.php.frontend)
+Rainbow Brackets (izhangzhihao.rainbow.brackets)
+Spring (com.intellij.spring)
+SSH Remote Run (org.jetbrains.plugins.remote-run)
+Subversion
+Vue.js (org.jetbrains.plugins.vue)

@@ -1,19 +1,19 @@
-acejump
-Atom Material Icons
-CodeGlancePro
-dotenv
-dracula-pro
-ej
-gittoolbox
-graphql
-image-viewer
-intellij-awesome-console-0.1337.12
-intellij-csv-validator
-intellij-rainbow-brackets
-markdown-editor
-Mermaid
-ml-llm
-StringManipulation
-vcs-svn
-WakaTime
-ZeroLengthRadar
+.env files (ru.adelf.idea.dotenv)
+AceJump
+Atom Material Icons (com.mallowigi)
+Awesome Console (awesome.console)
+CodeGlance Pro (com.nasller.CodeGlancePro)
+CSV Editor (net.seesharpsoft.intellij.plugins.csv)
+Debug Image Viewer (pl.sudo.imageviewer.python)
+Dracula Pro (com.draculatheme.idea)
+GitToolBox (zielu.gittoolbox)
+GraphQL (com.intellij.lang.jsgraphql)
+JetBrains AI Assistant (com.intellij.ml.llm)
+Junie, the AI coding agent by JetBrains (org.jetbrains.junie)
+Markdown Editor (com.shuzijun.markdown-editor)
+Mermaid (com.intellij.mermaid)
+Rainbow Brackets (izhangzhihao.rainbow.brackets)
+StringManipulation (String Manipulation)
+Subversion
+WakaTime (com.wakatime.intellij.plugin)
+Zero Width Characters locator (com.ultrahob.zerolength.plugin)

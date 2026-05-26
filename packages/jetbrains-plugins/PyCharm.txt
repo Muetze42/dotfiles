@@ -1,33 +1,33 @@
-bigdatatools-awsBase
-bigdatatools-azure
-bigdatatools-binaryFilesSupport
-bigdatatools-common
-bigdatatools-core
-bigdatatools-coreUi
-bigdatatools-flink
-bigdatatools-gcloud
-bigdatatools-metastore-core
-bigdatatools-plugin-rfs
-bigdatatools-plugin-spark
-bigdatatools-zeppelin
-clouds-kubernetes
-CodeGlancePro
-dotenv
-dracula-pro
-ej
-fullLine
-gittoolbox
-ignore
-image-viewer
-intellij-csv-validator
-intellij-rainbow-brackets
-jupyter-plugin
-lsp4ij
-markdown-editor
-Mermaid
-ml-llm
-Notebooks
-packageChecker
-performanceTesting
-vcs-svn
-vuejs-plugin
+.env files (ru.adelf.idea.dotenv)
+.ignore (mobi.hsz.idea.gitignore)
+Big Data File Viewer (com.intellij.bigdatatools.binary.files)
+Big Data Tools (com.intellij.bigdatatools)
+Big Data Tools AWS Base (intellij.bigdatatools.awsBase)
+Big Data Tools Azure (intellij.bigdatatools.azure)
+Big Data Tools Core (com.intellij.bigdatatools.core)
+Big Data Tools Core UI (intellij.bigdatatools.coreUi)
+Big Data Tools Google Cloud (intellij.bigdatatools.gcloud)
+CodeGlance Pro (com.nasller.CodeGlancePro)
+CSV Editor (net.seesharpsoft.intellij.plugins.csv)
+Debug Image Viewer (pl.sudo.imageviewer.python)
+Dracula Pro (com.draculatheme.idea)
+Flink (com.intellij.bigdatatools.flink)
+Full Line Code Completion (org.jetbrains.completion.full.line)
+GitToolBox (zielu.gittoolbox)
+JetBrains AI Assistant (com.intellij.ml.llm)
+Junie, the AI coding agent by JetBrains (org.jetbrains.junie)
+Jupyter (intellij.jupyter)
+Kubernetes (com.intellij.kubernetes)
+LSP4IJ (com.redhat.devtools.lsp4ij)
+Markdown Editor (com.shuzijun.markdown-editor)
+Mermaid (com.intellij.mermaid)
+Metastore Core (com.intellij.bigdatatools.metastore.core)
+Notebook (com.itcodebox.leewyatt.notebooks.id)
+Package Checker (org.jetbrains.security.package-checker)
+Performance Testing (com.jetbrains.performancePlugin)
+Rainbow Brackets (izhangzhihao.rainbow.brackets)
+Remote File Systems (com.intellij.bigdatatools.rfs)
+Spark (com.intellij.bigdatatools.spark)
+Subversion
+Vue.js (org.jetbrains.plugins.vue)
+Zeppelin (com.intellij.bigdatatools.zeppelin)

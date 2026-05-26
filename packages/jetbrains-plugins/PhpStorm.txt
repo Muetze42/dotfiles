@@ -1,55 +1,54 @@
-acejump
-aqua-plugin
-Atom Material Icons
-bashsupport-pro
-clouds-docker-impl
-CodeGlancePro
-Cypresso
-dotenv
-dracula-pro
-ej
-faker-intellij-plugin
-fullLine
-generator
-Git Commit Message Helper
-gittoolbox
-hunspell
-idea-phpstan-toolbox
-idea-php-toolbox
-ignore
-image-viewer
-intellij-astro-plugin
-intellij-awesome-console-0.1337.12
-intellij-csv-validator
-intellij-json-sorter-plugin
-intellij-mjml-support
-intellij-neon
-intellij-rainbow-brackets
-IntelliVuePlugin
-JSLint
-JsonHelper
-JsonParser
-laravel-idea
-Laravel Tinker
-lsp4ij
-MarioProgressBar-1.9
-markdown-editor
-mcpserver
-Mermaid
+.env files (ru.adelf.idea.dotenv)
+.ignore (mobi.hsz.idea.gitignore)
+AceJump
+Astro Pro (com.astroproPlugin)
+Atom Material Icons (com.mallowigi)
+Awesome Console (awesome.console)
+BashSupport Pro (pro.bashsupport)
+CodeGlance Pro (com.nasller.CodeGlancePro)
+CSV Editor (net.seesharpsoft.intellij.plugins.csv)
+Cypresso (me.mbolotov.cypress)
+Debug Image Viewer (pl.sudo.imageviewer.python)
+Docker
+Dracula Pro (com.draculatheme.idea)
+Faker (pl.tigersoft.intellij.faker)
+FTP/SFTP/WebDAV Connectivity (com.jetbrains.plugins.webDeployment)
+Full Line Code Completion (org.jetbrains.completion.full.line)
+Git Commit Message Helper (commit-message-helper-idea-plugin)
+GitToolBox (zielu.gittoolbox)
+Hungarian Hunspell (hunspell)
+IntelliVue (tv.twelvetone.intellij.plugins.intellivue)
+JetBrains AI Assistant (com.intellij.ml.llm)
+JSLint (com.jetbrains.plugins.jslint)
+Json Helper (com.mroche.JsonHelper)
+JSON Sorter (com.ivanovych666.intellij.plugin.jsonsorter)
+JsonParser (cai.JsonParser)
+Junie, the AI coding agent by JetBrains (org.jetbrains.junie)
+Laravel Idea (com.laravel_idea.plugin)
+Laravel Tinker (nl.deschepers.laraveltinker)
+Lorem Ipsum Generator (digital.pedda.loremIpsum)
+LSP4IJ (com.redhat.devtools.lsp4ij)
+Mario Progress Bar (manjaro.mpb)
+Markdown Editor (com.shuzijun.markdown-editor)
+MCP Server (com.intellij.mcpServer)
+Mermaid (com.intellij.mermaid)
+MJML Support (de.timo_reymann.intellij-mjml-support)
 mjml-support
-ml-llm
-nginx-intellij-plugin
-PHP Annotations
-phpinspectionsea-6.1.0
-phpinspectionsea-6.2.0
-properties
-remoteRun
-StringManipulation
-Tailwind Smart Completions
-testdata-plugin
-TranslationPlugin
-vcs-svn
-w3validators
-WakaTime
-webDeployment
-ZeroLengthRadar
+Neon (org.nette.neon)
+Nginx Configuration (dev.meanmail.plugin.nginx-intellij-plugin)
+PHP Annotations (de.espend.idea.php.annotation)
+Php Inspections (EA Extended) (com.kalessil.phpStorm.phpInspectionsEA)
+PHP Toolbox (de.espend.idea.php.toolbox)
+PHPStan Toolbox (de.shyim.ideaphpstantoolbox)
+Properties (com.intellij.properties)
+Rainbow Brackets (izhangzhihao.rainbow.brackets)
+SSH Remote Run (org.jetbrains.plugins.remote-run)
+StringManipulation (String Manipulation)
+Subversion
+Tailwind CSS Smart Completions (com.laravel_idea.tailwind)
+Test Automation (com.intellij.aqua)
+Test Data (com.intellij.datagen)
+Translation (cn.yiiguxing.plugin.translate)
+W3C Validators (W3Validators)
+WakaTime (com.wakatime.intellij.plugin)
+Zero Width Characters locator (com.ultrahob.zerolength.plugin)

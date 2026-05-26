@@ -1,37 +1,37 @@
-acejump
-Atom Material Icons
-CamelCasePlugin
-clouds-docker-impl
-CodeGlancePro
-dotenv
-dracula-pro
-ej
-eversql-jetbrains-plugin
-fileExpander
-fullLine
-gittoolbox
-go-linter
-graphql
-ignore
-image-viewer
-Indent Rainbow
-intellij-awesome-console-0.1337.12
-intellij-csv-validator
-intellij-developer-tools-plugin
-intellij-rainbow-brackets
-JsonHelper
-markdown-editor
-mcpserver
-Mermaid
-ml-llm
-Notebooks
-performanceTesting
-postcss
-prettierJS
-StringManipulation
-tailwindcss
-vcs-svn
-vitejs
-WakaTime
-webDeployment
-ZeroLengthRadar
+.env files (ru.adelf.idea.dotenv)
+.ignore (mobi.hsz.idea.gitignore)
+AceJump
+Atom Material Icons (com.mallowigi)
+Awesome Console (awesome.console)
+CamelCase (de.netnexus.camelcaseplugin)
+CodeGlance Pro (com.nasller.CodeGlancePro)
+CSV Editor (net.seesharpsoft.intellij.plugins.csv)
+Debug Image Viewer (pl.sudo.imageviewer.python)
+Developer Tools (dev.turingcomplete.intellijdevelopertoolsplugins)
+Docker
+Dracula Pro (com.draculatheme.idea)
+File Expander (com.github.camork.fileExpander)
+FTP/SFTP/WebDAV Connectivity (com.jetbrains.plugins.webDeployment)
+Full Line Code Completion (org.jetbrains.completion.full.line)
+GitToolBox (zielu.gittoolbox)
+Go Linter (com.ypwang.plugin.go-linter)
+GraphQL (com.intellij.lang.jsgraphql)
+Indent Rainbow (indent-rainbow.indent-rainbow)
+JetBrains AI Assistant (com.intellij.ml.llm)
+Json Helper (com.mroche.JsonHelper)
+Junie, the AI coding agent by JetBrains (org.jetbrains.junie)
+Markdown Editor (com.shuzijun.markdown-editor)
+MCP Server (com.intellij.mcpServer)
+Mermaid (com.intellij.mermaid)
+Notebook (com.itcodebox.leewyatt.notebooks.id)
+Performance Testing (com.jetbrains.performancePlugin)
+PostCSS (org.intellij.plugins.postcss)
+Prettier (intellij.prettierJS)
+Rainbow Brackets (izhangzhihao.rainbow.brackets)
+SQL Optimizer, SQL Formatter, SQL Minifier, PostgreSQL and MySQL (com.eversql.plugins.jetbrains)
+StringManipulation (String Manipulation)
+Subversion
+Tailwind CSS (com.intellij.tailwindcss)
+Vite (intellij.vitejs)
+WakaTime (com.wakatime.intellij.plugin)
+Zero Width Characters locator (com.ultrahob.zerolength.plugin)
