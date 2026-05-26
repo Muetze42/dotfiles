@@ -1,0 +1,37 @@
+Atom Material Icons
+CamelCasePlugin
+CodeGlancePro
+Indent Rainbow
+JsonHelper
+Mermaid
+Notebooks
+StringManipulation
+WakaTime
+ZeroLengthRadar
+acejump
+clouds-docker-impl
+dotenv
+dracula-pro
+ej
+eversql-jetbrains-plugin
+fileExpander
+fullLine
+gittoolbox
+go-linter
+graphql
+ignore
+image-viewer
+intellij-awesome-console-0.1337.12
+intellij-csv-validator
+intellij-developer-tools-plugin
+intellij-rainbow-brackets
+markdown-editor
+mcpserver
+ml-llm
+performanceTesting
+postcss
+prettierJS
+tailwindcss
+vcs-svn
+vitejs
+webDeployment

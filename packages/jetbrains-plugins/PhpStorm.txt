@@ -1,0 +1,55 @@
+Atom Material Icons
+CodeGlancePro
+Cypresso
+Git Commit Message Helper
+IntelliVuePlugin
+JSLint
+JsonHelper
+JsonParser
+Laravel Tinker
+MarioProgressBar-1.9
+Mermaid
+PHP Annotations
+StringManipulation
+Tailwind Smart Completions
+TranslationPlugin
+WakaTime
+ZeroLengthRadar
+acejump
+aqua-plugin
+bashsupport-pro
+clouds-docker-impl
+dotenv
+dracula-pro
+ej
+faker-intellij-plugin
+fullLine
+generator
+gittoolbox
+hunspell
+idea-php-toolbox
+idea-phpstan-toolbox
+ignore
+image-viewer
+intellij-astro-plugin
+intellij-awesome-console-0.1337.12
+intellij-csv-validator
+intellij-json-sorter-plugin
+intellij-mjml-support
+intellij-neon
+intellij-rainbow-brackets
+laravel-idea
+lsp4ij
+markdown-editor
+mcpserver
+mjml-support
+ml-llm
+nginx-intellij-plugin
+phpinspectionsea-6.1.0
+phpinspectionsea-6.2.0
+properties
+remoteRun
+testdata-plugin
+vcs-svn
+w3validators
+webDeployment

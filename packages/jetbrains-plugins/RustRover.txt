@@ -1,0 +1,19 @@
+Atom Material Icons
+CodeGlancePro
+Mermaid
+StringManipulation
+WakaTime
+ZeroLengthRadar
+acejump
+dotenv
+dracula-pro
+ej
+gittoolbox
+graphql
+image-viewer
+intellij-awesome-console-0.1337.12
+intellij-csv-validator
+intellij-rainbow-brackets
+markdown-editor
+ml-llm
+vcs-svn
