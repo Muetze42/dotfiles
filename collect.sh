@@ -6,10 +6,6 @@ JETBRAINS_PLUGIN_DIR="$OUTPUT_DIR/jetbrains-plugins"
 mkdir -p "$JETBRAINS_PLUGIN_DIR"
 TAB="$(printf '\t')"
 
-version_greater() {
-  [[ "$(printf '%s\n%s\n' "$1" "$2" | sort -V | tail -n1)" == "$1" && "$1" != "$2" ]]
-}
-
 # PHP Extensions
 php -m | grep -v '^\[' | grep -v '^$' | sort -u > "$OUTPUT_DIR/php-extensions.txt"
 
@@ -39,34 +35,29 @@ find "$OUTPUT_DIR" -maxdepth 1 -type f -name 'jetbrains-plugins-*.txt' -delete
 find "$JETBRAINS_PLUGIN_DIR" -maxdepth 1 -type f -name '*.txt' -delete
 
 if [ -d "$HOME/.local/share/JetBrains" ]; then
-  declare -A jetbrains_latest_versions
-  declare -A jetbrains_latest_dirs
+  find "$HOME/.local/share/JetBrains" -maxdepth 1 -mindepth 1 -type d ! -name 'Toolbox' 2>/dev/null |
+    while IFS= read -r ide_dir; do
+      ide_name="$(basename "$ide_dir")"
+      product="$(printf '%s\n' "$ide_name" | sed -nE 's/^([A-Za-z]+)([0-9]{4}\.[0-9]+)$/\1/p')"
+      version="$(printf '%s\n' "$ide_name" | sed -nE 's/^([A-Za-z]+)([0-9]{4}\.[0-9]+)$/\2/p')"
 
-  while IFS= read -r ide_dir; do
-    ide_name="$(basename "$ide_dir")"
-
-    if [[ "$ide_name" =~ ^([A-Za-z]+)([0-9]{4}\.[0-9]+)$ ]]; then
-      product="${BASH_REMATCH[1]}"
-      version="${BASH_REMATCH[2]}"
-
-      if [ -z "${jetbrains_latest_versions[$product]}" ] || version_greater "$version" "${jetbrains_latest_versions[$product]}"; then
-        jetbrains_latest_versions[$product]="$version"
-        jetbrains_latest_dirs[$product]="$ide_dir"
+      if [ -n "$product" ] && [ -n "$version" ]; then
+        printf '%s\t%s\t%s\n' "$product" "$version" "$ide_dir"
       fi
-    fi
-  done < <(find "$HOME/.local/share/JetBrains" -maxdepth 1 -mindepth 1 -type d ! -name 'Toolbox' | sort)
+    done |
+    sort -t "$TAB" -k1,1 -k2,2Vr |
+    awk -F '\t' '!seen[$1]++ { print }' |
+    sort -t "$TAB" -k1,1 |
+    while IFS="$TAB" read -r product version ide_dir; do
+      output_file="$JETBRAINS_PLUGIN_DIR/${product}.txt"
 
-  printf '%s\n' "${!jetbrains_latest_dirs[@]}" | sort | while IFS= read -r product; do
-    ide_dir="${jetbrains_latest_dirs[$product]}"
-    output_file="$JETBRAINS_PLUGIN_DIR/${product}.txt"
-
-    find "$ide_dir" -maxdepth 1 -mindepth 1 \
-      \( -type d -o \( -type f -name '*.jar' \) \) ! -name '.*' 2>/dev/null |
-      while IFS= read -r plugin_path; do
-        plugin_name="$(basename "$plugin_path")"
-        printf '%s\n' "${plugin_name%.jar}"
-      done | sed '/^$/d' | sort -u > "$output_file"
-  done
+      find "$ide_dir" -maxdepth 1 -mindepth 1 \
+        \( -type d -o \( -type f -name '*.jar' \) \) ! -name '.*' 2>/dev/null |
+        while IFS= read -r plugin_path; do
+          plugin_name="$(basename "$plugin_path")"
+          printf '%s\n' "${plugin_name%.jar}"
+        done | sed '/^$/d' | sort -u > "$output_file"
+    done
 fi
 
 # Manually installed desktop apps under /opt
