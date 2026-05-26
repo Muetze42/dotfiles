@@ -50,6 +50,9 @@ tar -xzf jetbrains-toolbox-*.tar.gz
 ./jetbrains-toolbox-*/jetbrains-toolbox
 ```
 
+Installed JetBrains plugins are exported as reference lists in `packages/jetbrains-plugins/`.
+Restore them manually in the matching current IDE version.
+
 ## Valet Linux
 
 Requires Composer to be installed first.

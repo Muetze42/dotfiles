@@ -81,6 +81,15 @@ show_jetbrains_toolbox_apps() {
     info "JetBrains Toolbox app list: $SCRIPT_DIR/packages/jetbrains-toolbox-apps.txt"
 }
 
+# JetBrains plugins
+show_jetbrains_plugins() {
+    info "JetBrains plugins are exported as reference lists for the latest installed IDE version"
+    find "$SCRIPT_DIR/packages/jetbrains-plugins" -maxdepth 1 -type f -name '*.txt' | sort |
+        while IFS= read -r plugin_file; do
+            info "JetBrains plugin list: $plugin_file"
+        done
+}
+
 # Manually installed desktop apps under /opt
 show_manual_opt_apps() {
     info "Apps installed under /opt are exported as a reference list and need manual restore"
@@ -177,6 +186,10 @@ main() {
 
     if confirm "Show JetBrains Toolbox app info?"; then
         show_jetbrains_toolbox_apps
+    fi
+
+    if confirm "Show JetBrains plugin info?"; then
+        show_jetbrains_plugins
     fi
 
     if confirm "Show manual /opt app info?"; then
