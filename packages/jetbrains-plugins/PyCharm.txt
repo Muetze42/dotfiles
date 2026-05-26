@@ -28,6 +28,7 @@ Performance Testing (com.jetbrains.performancePlugin)
 Rainbow Brackets (izhangzhihao.rainbow.brackets)
 Remote File Systems (com.intellij.bigdatatools.rfs)
 Spark (com.intellij.bigdatatools.spark)
+SQL Optimizer, SQL Formatter, SQL Minifier, PostgreSQL and MySQL (com.eversql.plugins.jetbrains)
 Subversion
 Vue.js (org.jetbrains.plugins.vue)
 Zeppelin (com.intellij.bigdatatools.zeppelin)

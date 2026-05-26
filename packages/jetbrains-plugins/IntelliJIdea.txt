@@ -24,6 +24,7 @@ Performance Testing (com.jetbrains.performancePlugin)
 PHP for JetBrains Client (com.intellij.php.frontend)
 Rainbow Brackets (izhangzhihao.rainbow.brackets)
 Spring (com.intellij.spring)
+SQL Optimizer, SQL Formatter, SQL Minifier, PostgreSQL and MySQL (com.eversql.plugins.jetbrains)
 SSH Remote Run (org.jetbrains.plugins.remote-run)
 Subversion
 Vue.js (org.jetbrains.plugins.vue)

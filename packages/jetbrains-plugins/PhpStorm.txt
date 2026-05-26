@@ -42,6 +42,7 @@ PHP Toolbox (de.espend.idea.php.toolbox)
 PHPStan Toolbox (de.shyim.ideaphpstantoolbox)
 Properties (com.intellij.properties)
 Rainbow Brackets (izhangzhihao.rainbow.brackets)
+SQL Optimizer, SQL Formatter, SQL Minifier, PostgreSQL and MySQL (com.eversql.plugins.jetbrains)
 SSH Remote Run (org.jetbrains.plugins.remote-run)
 StringManipulation (String Manipulation)
 Subversion

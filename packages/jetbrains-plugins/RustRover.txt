@@ -12,6 +12,7 @@ JetBrains AI Assistant (com.intellij.ml.llm)
 Junie, the AI coding agent by JetBrains (org.jetbrains.junie)
 Markdown Editor (com.shuzijun.markdown-editor)
 Mermaid (com.intellij.mermaid)
+Notebook (com.itcodebox.leewyatt.notebooks.id)
 Rainbow Brackets (izhangzhihao.rainbow.brackets)
 StringManipulation (String Manipulation)
 Subversion
