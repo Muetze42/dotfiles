@@ -1,6 +1,7 @@
 Bluetooth-Battery-Meter@maniacx.github.com
 caffeine@patapon.info
 ding@rastersoft.com
+next-up-2@nanolookc.github.com
 php-laravel-valet@rahulhaque
 places-menu@gnome-shell-extensions.gcampax.github.com
 snapd-prompting@canonical.com
