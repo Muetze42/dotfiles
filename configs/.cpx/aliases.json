@@ -1,0 +1,14 @@
+{
+    "pint": {
+        "package": "laravel\/pint",
+        "bin": null
+    },
+    "phpstan": {
+        "package": "phpstan\/phpstan",
+        "bin": "phpstan"
+    },
+    "rector": {
+        "package": "rector\/rector",
+        "bin": null
+    }
+}

@@ -155,6 +155,21 @@ symlink_configs() {
         done
         success "Copied ~/.local/bin scripts"
     fi
+
+    if [[ -f "$SCRIPT_DIR/configs/.cpx/aliases.json" ]]; then
+        mkdir -p ~/.cpx
+        if [[ -f ~/.cpx/aliases.json ]] && [[ ! -L ~/.cpx/aliases.json ]]; then
+            if confirm "~/.cpx/aliases.json exists. Backup and replace?"; then
+                mv ~/.cpx/aliases.json ~/.cpx/aliases.json.backup
+                info "Backed up to ~/.cpx/aliases.json.backup"
+            else
+                warn "Skipping CPX aliases"
+                return
+            fi
+        fi
+        cp "$SCRIPT_DIR/configs/.cpx/aliases.json" ~/.cpx/aliases.json
+        success "Copied CPX aliases"
+    fi
 }
 
 # Main

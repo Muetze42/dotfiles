@@ -173,9 +173,18 @@ OUTPUT_DIR="./configs"
 mkdir -p "$OUTPUT_DIR"
 LOCAL_BIN_DIR="$OUTPUT_DIR/.local-bin"
 mkdir -p "$LOCAL_BIN_DIR"
+CPX_CONFIG_DIR="$OUTPUT_DIR/.cpx"
+mkdir -p "$CPX_CONFIG_DIR"
 
 # ZSHRC config
 cp ~/.zshrc "$OUTPUT_DIR/.zshrc"
+
+# CPX aliases
+if [ -f "$HOME/.cpx/aliases.json" ]; then
+  cp "$HOME/.cpx/aliases.json" "$CPX_CONFIG_DIR/aliases.json"
+else
+  rm -f "$CPX_CONFIG_DIR/aliases.json"
+fi
 
 # User scripts
 find "$LOCAL_BIN_DIR" -mindepth 1 -maxdepth 1 -type f -delete 2>/dev/null

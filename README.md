@@ -7,6 +7,7 @@ Personal dotfiles and package lists for Ubuntu/GNOME setup.
 ### Configs
 - `.zshrc` - Zsh configuration with Oh My Zsh, aliases, and path setup
 - `.local-bin/` - Personal scripts from `~/.local/bin`
+- `.cpx/aliases.json` - CPX package aliases
 
 ### Package Lists
 - `apt-packages.txt` - APT packages (dev tools, PHP, databases, system utilities)
@@ -42,6 +43,7 @@ This will:
 - Install global Composer packages
 - Symlink .zshrc to home directory
 - Copy personal `~/.local/bin` scripts
+- Copy CPX aliases to `~/.cpx/aliases.json`
 
 ### Manual Installation
 
