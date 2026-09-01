@@ -3,4 +3,5 @@ corepack
 gemini-cli
 npm
 npm-check-updates
+postmark-cli
 typescript

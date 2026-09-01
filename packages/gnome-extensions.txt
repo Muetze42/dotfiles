@@ -13,3 +13,4 @@ ubuntu-dock@ubuntu.com
 utcclock@injcristianrojas.github.com
 web-search-provider@ubuntu.com
 windowIsReady_Remover@nunofarruca@gmail.com
+window-list@gnome-shell-extensions.gcampax.github.com

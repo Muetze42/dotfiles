@@ -3,49 +3,119 @@ set -euo pipefail
 
 usage() {
   cat <<'EOF'
-Usage: clear-commits [branch] [--wip|--initial]
+Usage: clear-commits [branch] [options]
 
 Rewrites the branch history into a single orphan commit and force-pushes it.
+Without [branch], the current branch is used.
 
 Options:
-  --wip      Use commit message "chore: wip"
-  --initial  Use commit message "chore: initial commit" (default)
-  -h, --help Show this help
+  -w, --wip             Use commit message "chore: wip"
+  --initial             Use commit message "chore: initial commit" (default)
+  -m, --message MESSAGE Use a custom commit message
+  --no-push             Rewrite locally, but do not force-push
+  --dry-run             Show what would happen without changing anything
+  --remote REMOTE       Push to this remote (default: origin)
+  -y, --yes             Skip confirmation prompt
+  -h, --help            Show this help
 EOF
 }
 
-branch="main"
-commit_message="chore: initial commit"
+die() {
+  echo "$1" >&2
+  exit 1
+}
 
-for arg in "$@"; do
-  case "$arg" in
-    --wip)
+branch=""
+remote="origin"
+commit_message="chore: initial commit"
+push=true
+dry_run=false
+assume_yes=false
+
+while [[ $# -gt 0 ]]; do
+  case "$1" in
+    -w|--wip)
       commit_message="chore: wip"
+      shift
       ;;
     --initial)
       commit_message="chore: initial commit"
+      shift
+      ;;
+    -m|--message)
+      [[ $# -ge 2 ]] || die "Missing value for $1"
+      commit_message="$2"
+      shift 2
+      ;;
+    --message=*)
+      commit_message="${1#*=}"
+      [[ -n "$commit_message" ]] || die "Missing value for --message"
+      shift
+      ;;
+    --no-push)
+      push=false
+      shift
+      ;;
+    --dry-run)
+      dry_run=true
+      shift
+      ;;
+    --remote)
+      [[ $# -ge 2 ]] || die "Missing value for --remote"
+      remote="$2"
+      shift 2
+      ;;
+    --remote=*)
+      remote="${1#*=}"
+      [[ -n "$remote" ]] || die "Missing value for --remote"
+      shift
+      ;;
+    -y|--yes)
+      assume_yes=true
+      shift
       ;;
     -h|--help)
       usage
       exit 0
       ;;
     --*)
-      echo "Unknown argument: $arg" >&2
+      echo "Unknown argument: $1" >&2
       usage >&2
       exit 1
       ;;
     *)
-      branch="$arg"
+      [[ -z "$branch" ]] || die "Unexpected argument: $1"
+      branch="$1"
+      shift
       ;;
   esac
 done
 
-echo "Delete all commit history? Using branch \"$branch\""
-read -rp "Do you want to continue? [y/N] " answer
+if [[ -z "$branch" ]]; then
+  branch="$(git symbolic-ref --quiet --short HEAD)" || die "Could not determine current branch. Pass a branch explicitly."
+fi
 
-if [[ "$answer" != [yY] ]]; then
-  echo "Aborted."
+echo "Delete all commit history? Using branch \"$branch\""
+echo "Commit message: $commit_message"
+if [[ "$push" == true ]]; then
+  echo "Remote: $remote"
+else
+  echo "Push: disabled"
+fi
+
+if [[ "$dry_run" == true ]]; then
+  echo
+  echo "Dry run only. No changes made."
   exit 0
+fi
+
+if [[ "$assume_yes" != true ]]; then
+  read -rp "Do you want to continue? [y/N] " answer
+
+  if [[ "$answer" != [yY] ]]; then
+    echo "Aborted."
+    exit 0
+  fi
 fi
 
 git checkout --orphan latest_branch
@@ -53,4 +123,7 @@ git add -A
 git commit -m "$commit_message"
 git branch -D "$branch"
 git branch -m "$branch"
-git push -f origin "$branch"
+
+if [[ "$push" == true ]]; then
+  git push -f "$remote" "$branch"
+fi

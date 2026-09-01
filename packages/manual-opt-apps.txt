@@ -1,5 +1,6 @@
 1Password
 JDownloader 2
+Microsoft Teams (PWA)
 Obsidian
 Telegram
 tinyMediaManager

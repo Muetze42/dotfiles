@@ -1,10 +1,12 @@
 bare
 canonical-livepatch
+chromium
 code
 core18
 core20
 core22
 core24
+cups
 desktop-security-center
 firefox
 firmware-updater
@@ -12,6 +14,9 @@ gnome-3-38-2004
 gnome-42-2204
 gnome-46-2404
 gtk-common-themes
+kf6-core24
+kruler
+lxqt-support-core24
 mesa-2404
 prompting-client
 snapd

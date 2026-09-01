@@ -114,6 +114,8 @@ alias tinker="php artisan tinker"
 alias v="valet"
 alias links="valet links"
 alias launcher="php artisan app:launcher"
+alias cu="composer-updater"
+alias noai='unset CODEX_CI CODEX_MANAGED_BY_NPM CODEX_MANAGED_PACKAGE_ROOT CODEX_THREAD_ID'
 
 # History Settings
 HISTSIZE=10000
@@ -141,7 +143,7 @@ fi
 # Python
 # . "$HOME/.local/bin/env"
 export PATH="$HOME/.local/bin:$PATH"
-export PIP_USER=1
+# export PIP_USER=1
 export COMPOSER_DEFAULT_VENDOR=norman-huth
 export COMPOSER_DEFAULT_LICENSE=MIT
 
@@ -163,3 +165,5 @@ export VALET_DOMAIN_PREFIX=d-
 # Added by LM Studio CLI (lms)
 export PATH="$PATH:/home/norman/.lmstudio/bin"
 # End of LM Studio CLI section
+
+export POSTMARK_SERVER_TOKEN=""
