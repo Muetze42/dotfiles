@@ -36,6 +36,7 @@ MJML Support (de.timo_reymann.intellij-mjml-support)
 mjml-support
 Neon (org.nette.neon)
 Nginx Configuration (dev.meanmail.plugin.nginx-intellij-plugin)
+Node.js Remote Interpreter (org.jetbrains.plugins.node-remote-interpreter)
 Nuxt Pro (dev.jetplugins.nuxt)
 PHP Annotations (de.espend.idea.php.annotation)
 Php Inspections (EA Extended) (com.kalessil.phpStorm.phpInspectionsEA)

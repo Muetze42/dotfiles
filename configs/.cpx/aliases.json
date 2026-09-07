@@ -10,5 +10,9 @@
     "rector": {
         "package": "rector\/rector",
         "bin": null
+    },
+    "phpinsights": {
+        "package": "nunomaduro\/phpinsights",
+        "bin": null
     }
 }

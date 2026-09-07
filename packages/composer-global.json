@@ -14,8 +14,9 @@
         "norman-huth/composer-updater": "@dev",
         "larastan/larastan": "^3.9",
         "ai-provide/warden": "@dev",
-        "laravel/installer": "^5.25",
-        "cpx/cpx": "^2.1"
+        "cpx/cpx": "^2.1",
+        "rector/rector": "^2.5",
+        "laravel/installer": "^5.32"
     },
     "config": {
         "allow-plugins": {
