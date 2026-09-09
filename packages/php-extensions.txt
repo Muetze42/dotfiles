@@ -42,6 +42,7 @@ Reflection
 session
 shmop
 SimpleXML
+soap
 sockets
 sodium
 SPL

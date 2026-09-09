@@ -152,6 +152,7 @@ php-mysql
 php-pcov
 php-pgsql
 php-redis
+php-soap
 php-sqlite3
 php-xml
 php-zip
