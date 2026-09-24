@@ -9,6 +9,10 @@ Personal dotfiles and package lists for Ubuntu/GNOME setup.
 - `.local-bin/` - Personal scripts from `~/.local/bin`
 - `.cpx/aliases.json` - CPX package aliases
 
+### Valet
+
+- `valet/` - Saved Valet DNS fixes and VPN domain configuration with [restore instructions](valet/README.md)
+
 ### Package Lists
 - `apt-packages.txt` - APT packages (dev tools, PHP, databases, system utilities)
 - `snap-packages.txt` - Snap packages (Firefox, Steam, etc.)

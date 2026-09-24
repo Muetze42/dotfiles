@@ -1,0 +1,212 @@
+#!/usr/bin/env bash
+
+WORKDIR="/opt/valet-linux"
+DNSFILE="${WORKDIR}/dns-servers"
+DNSHEAD="${WORKDIR}/custom-nameservers"
+LOGFILE="${WORKDIR}/watch.log"
+VRESOLV="${WORKDIR}/resolv.conf"
+RESOLV="/etc/resolv.conf"
+LOCKFILE="${WORKDIR}/update.lock"
+
+function unique() {
+    # Function to remove duplicated lines (even when they are not contiguous)
+    # cat -n      puts line numbers
+    # sort -uk2   sort and remove duplicates (ignoring line numbers)
+    # sort -nk1   sort by line number
+    # cut -f2-    remove line numbers
+    cat -n | sort -uk2 | sort -nk1 | cut -f2-
+}
+
+function symlinkResolv() {
+    if [[ $(readlink -f "$RESOLV") != "$VRESOLV" ]]; then
+        if [[ ! -f "${RESOLV}.bak" ]]; then
+            mv "$RESOLV" "${RESOLV}.bak"
+        fi
+
+        ln -sf "$VRESOLV" "${RESOLV}.tmp"
+        mv "${RESOLV}.tmp" "$RESOLV"
+    fi
+}
+
+function getDirs() {
+    # Only watch live resolver providers. Recursive discovery under /run can
+    # include mounted copies of our own output and create a feedback loop.
+    DIRS=()
+    local dir
+    for dir in /run/NetworkManager /run/systemd/resolve /run/resolvconf/interface; do
+        [[ -d "$dir" ]] && DIRS+=("$dir")
+    done
+}
+
+function installIfChanged() {
+    local source="$1" target="$2"
+    if cmp -s "$source" "$target"; then
+        rm -f -- "$source"
+    else
+        chmod 0644 "$source" && mv -f -- "$source" "$target"
+    fi
+}
+
+function updateNameservers() {
+    (
+        flock -n 200 || exit 0
+        getFiles
+        local dns_tmp resolv_tmp log_tmp
+        dns_tmp=$(mktemp "${WORKDIR}/.dns-servers.XXXXXX") || exit 1
+        resolv_tmp=$(mktemp "${WORKDIR}/.resolv.conf.XXXXXX") || exit 1
+        log_tmp=$(mktemp "${WORKDIR}/.resolvfiles.XXXXXX") || exit 1
+        trap 'rm -f -- "$dns_tmp" "$resolv_tmp" "$log_tmp"' EXIT
+
+        printf '%s\n' "${FILES[@]}" > "$log_tmp"
+        installIfChanged "$log_tmp" "${WORKDIR}/resolvfiles.log"
+
+        # Exclude all loopback resolvers, including systemd-resolved, which
+        # reads our resolv.conf and can otherwise forward straight back here.
+        awk '$1 == "nameserver" && NF >= 2 {
+            server = $2
+            if (server !~ /^127\./ && server !~ /^::1(%|$)/ &&
+                !seen[server]++) print "nameserver " server
+        }' "$DNSHEAD" "${FILES[@]}" > "$dns_tmp"
+        [[ -s "$dns_tmp" ]] || exit 1
+        installIfChanged "$dns_tmp" "$DNSFILE" || exit 1
+
+        # Merge search domains once and publish a complete file atomically.
+        # Readers must never see a truncated file without its nameserver.
+        awk '
+            $1 == "search" || $1 == "domain" {
+                for (i = 2; i <= NF && $i !~ /^[#;]/; i++)
+                    if ($i != "." && $i !~ /^~/ && !domains[$i]++)
+                        search = search " " $i
+            }
+            $1 == "options" {
+                for (i = 2; i <= NF && $i !~ /^[#;]/; i++)
+                    if (!options[$i]++) opts = opts " " $i
+            }
+            END {
+                if (search != "") print "search" search
+                if (opts != "") print "options" opts
+                print "nameserver 127.0.0.1"
+            }
+        ' /dev/null "${FILES[@]}" > "$resolv_tmp"
+        installIfChanged "$resolv_tmp" "$VRESOLV" || exit 1
+        symlinkResolv
+    ) 200>"$LOCKFILE"
+}
+
+function getFiles() {
+    FILES=()
+    local file
+    for file in /run/NetworkManager/resolv.conf \
+                /run/systemd/resolve/resolv.conf \
+                /run/resolvconf/interface/*; do
+        [[ -f "$file" && -r "$file" ]] && FILES+=("$file")
+    done
+}
+
+function watchDirs() {
+    local WATCHERS=("${DIRS[@]}" "$WORKDIR")
+    printf 'Watching resolver providers:\n' >> "$LOGFILE"
+    printf ' - %s\n' "${DIRS[@]}" "$DNSHEAD" >> "$LOGFILE"
+
+    # Watch the directory for atomic replacement of custom-nameservers, but
+    # ignore our generated files and temporary files in that same directory.
+    inotifywait -q -m -e close_write -e moved_to -e create -e delete \
+        --format "%w%f" "${WATCHERS[@]}" | while IFS= read -r change; do
+        case "$change" in
+            /run/NetworkManager/resolv.conf|/run/systemd/resolve/resolv.conf|\
+            /run/resolvconf/interface/*|"$DNSHEAD")
+                updateNameservers
+                ;;
+        esac
+    done &
+}
+
+function main() {
+    # Create dns file in case it does not exists
+    if [[ ! -f "$DNSHEAD" ]]; then
+        echo "Creating default $DNSHEAD file"
+        echo nameserver 1.1.1.1 > $DNSHEAD
+    fi
+
+    touch "$DNSFILE"
+
+    # Clear log file
+    if [[ -f "$LOGFILE" ]]; then
+        rm "$LOGFILE"
+    fi
+
+    touch "$LOGFILE"
+
+    getDirs
+    updateNameservers
+    watchDirs
+}
+
+################################################################################
+
+function start {
+    if [[ $(pgrep -f 'inotifywait -q -m -e close_write') ]]; then
+        echo -e "Valet DNS Watcher is already running..."
+    else
+        echo -e "Starting Valet DNS Watcher..."
+        main
+        sleep 2 && echo $(pgrep -f 'inotifywait -q -m -e close_write') > "${WORKDIR}/watch.pid"
+        echo -e "Valet DNS Watcher started succesfully."
+    fi
+}
+
+function stop {
+    echo -e "Stopping Valet DNS Watcher...\n"
+
+    pkill -f "inotifywait -q -m -e close_write"
+
+    rm "$LOGFILE" && touch "$LOGFILE"
+
+    if [[ ! $(pgrep -f 'inotifywait -q -m -e close_write') ]]; then
+        echo -e "\nValet DNS Watcher stopped succesfully."
+    fi
+}
+
+function restart {
+    echo -e "Stopping Valet DNS Watcher..."
+
+    if [[ $(pgrep -f 'inotifywait -q -m -e close_write') ]]; then
+        pkill -f "inotifywait -q -m -e close_write"
+    fi
+
+    echo -e "Starting Valet DNS Watcher..."
+
+    main
+
+    if [[ $(pgrep -f 'inotifywait -q -m -e close_write') ]]; then
+        echo -e "Valet DNS Watcher restarted succesfully."
+    fi
+}
+
+function status {
+    if [[ -f "$LOGFILE" ]]; then
+        echo -e "Valet DNS service is running correctly.\n"
+        cat '/opt/valet-linux/watch.log'
+    else
+        echo "Valet DNS service is not running."
+    fi
+}
+
+case "$1" in
+   start)
+      start
+   ;;
+   stop)
+      stop
+   ;;
+   restart)
+      restart
+   ;;
+   status)
+      status
+   ;;
+   *)
+      echo "Usage: $0 {start|stop|restart|status}"
+esac
+
+exit 0
