@@ -24,30 +24,13 @@ Personal dotfiles and package lists for Ubuntu/GNOME setup.
 
 ## Usage
 
-### Automated Installation
+The package lists are inventories of the current setup and can be used as a
+reference when restoring the system. Configurations and applications must be
+installed or copied manually.
 
-```bash
-./install.sh
-```
+### Installation
 
-This will:
-- Install APT packages
-- Install Snap packages
-- Install PHP extensions
-- Install GNOME extensions
-- Show exported AppImage inventory
-- Show exported JetBrains Toolbox app inventory
-- Show exported JetBrains plugin inventories for the latest IDE versions
-- Show exported manual `/opt` app inventory
-- Install global pnpm packages
-- Install global Composer packages
-- Symlink .zshrc to home directory
-- Copy personal `~/.local/bin` scripts
-- Copy CPX aliases to `~/.cpx/aliases.json`
-
-### Manual Installation
-
-Some tools require manual installation. See [MANUAL.md](MANUAL.md) for instructions.
+See [MANUAL.md](MANUAL.md) for the manual installation steps.
 
 ## Requirements
 

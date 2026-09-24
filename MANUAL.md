@@ -33,7 +33,7 @@ Copy the theme file to `~/.oh-my-zsh/themes/dracula-pro.zsh-theme`
 
 ## 1Password with SSH Agent
 
-1. Install 1Password from APT (included in install.sh)
+1. Install 1Password for Linux (see the download link below)
 2. Enable SSH Agent in Settings > Developer > SSH Agent
 3. The agent socket is configured at `~/.1password/agent.sock`
 
