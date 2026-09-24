@@ -62,6 +62,10 @@ composer global require cpriego/valet-linux
 valet install
 ```
 
+After installation, restore the saved [Valet DNS fixes](valet/README.md).
+Running `valet install` again overwrites the installed DNS watcher script, so
+compare and reapply these fixes after reinstalling or updating Valet.
+
 [Valet Linux repository](https://github.com/cpriego/valet-linux)
 
 ## Spatie Ray
