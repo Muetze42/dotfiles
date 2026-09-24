@@ -5,6 +5,7 @@ Awesome Console (awesome.console)
 CodeGlance Pro (com.nasller.CodeGlancePro)
 CSV Editor (net.seesharpsoft.intellij.plugins.csv)
 Debug Image Viewer (pl.sudo.imageviewer.python)
+Docker
 Dracula Pro (com.draculatheme.idea)
 GitToolBox (zielu.gittoolbox)
 GraphQL (com.intellij.lang.jsgraphql)

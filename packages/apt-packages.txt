@@ -1,8 +1,10 @@
 1password
 apt-transport-https
 autocutsel
+bazaar
 bridge-utils
 bsdutils
+build-essential
 ca-certificates
 clipman
 cmake
@@ -90,6 +92,7 @@ libchewing3-data
 libcrypt-dev
 libdav1d7
 libfuse2t64
+libgtk-4-dev
 libjxl-tools
 libm17n-0
 libnss3-tools
@@ -108,6 +111,7 @@ libreoffice-l10n-en-gb
 libreoffice-l10n-en-za
 libvirt-clients
 libvirt-daemon-system
+libwebkitgtk-6.0-dev
 libxml2-utils
 libxxf86vm-dev
 linux-generic
